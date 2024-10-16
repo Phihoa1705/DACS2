@@ -1,95 +1,29 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Video</title>
-    <!--font awsome cdn link-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <!--css link-->
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-
     <!--Header-->
-
-    <header class="header">
-        <section class="flex">
-            <a href="home.html">Educa.</a>
-
-            <form action="" method="post" class="search-form">
-                <input type="text" name="search_box" placeholder="Search courses">
-                <button type="submit" class="fas fa-search" name="search_box"></button>
-            </form>
-            <div class="icons">
-                <div id="menu-btn" class="fas fa-bars"></div>
-                <div id="search-btn" class="fas fa-search"></div>
-                <div id="user-btn" class="fas fa-user"></div>
-                <div id="toggle-btn" class="fas fa-sun"></div>
-            </div>
-
-            <div class="profile">
-                <img src="images/pic-1.jpg" alt="">
-                <h3>Hoa handsome</h3>
-                <span>Student</span>
-                <a href="profile.html" class="btn">view profile</a>
-                <div class="flex-btn">
-                    <a href="login.html" class="option-btn">login</a>
-                    <a href="register.html" class="option-btn">register</a>
-                </div>
-            </div>
-
-        </section>
-
-    </header>
-
-    <!--Side bar-->
-
-    <div class="side-bar">
-
-        <div class="close-side-bar">
-            <i class="fas fa-times"></i>
-        </div>
-
-        <div class="profile">
-            <img src="images/pic-1.jpg" alt="">
-            <h3>Hoa handsome</h3>
-            <span>Student</span>
-            <a href="profile.html" class="btn">view profile</a>
-        </div>
-
-        <div class="navbar">
-            <a href="home.html"><i class="fas fa-home"></i><span>home</span></a>
-            <a href="about.html"><i class="fas fa-question"></i><span>about us</span></a>
-            <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>courses</span></a>
-            <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>teachers</span></a>
-            <a href="contact.html"><i class="fas fa-headset"></i><span>contact us</span></a>
-        </div>
-
-    </div>
-
-    <!--side bar section ends-->
+    <?php require_once './layout/header.php' ?>
+    <!--Side bar start-->
+    <?php require_once './layout/slidebar.php' ?>
+    <!--Side bar end-->
 
     <!--watch video section start-->
 
     <section class="watch-video">
 
         <div class="video-details">
-            <video src="images//vid-1.mp4" class="video" poster="images/post-1-1.png" controls autoplay></video>
+            <video src="/DACS2/images/vid-1.mp4" class="video" poster="/DACS2/images/post-1-1.png" controls autoplay></video>
             <h3 class="title">complete HTML tutorial (part 01)</h3>
             <div class="info">
                 <p><div><i class="fas fa-calendar"><span>21-25-2022</span></i></div></p>
                 <p><div><i class="fas fa-heart"><span>45 likes</span></i></div></p>
             </div>
             <div class="tutor">
-                <img src="images/pic-2.jpg" alt="">
+                <img src="/DACS2/images/pic-2.jpg" alt="">
                 <div>
                     <h3>John Deo</h3>
                     <span>developer</span>
                 </div>
             </div>
                 <form action="" mehthod="post" class="flex">
-                    <a href="playlist.html" class="inline-btn">view playlist</a>
+                    <a href="/DACS2/php/playlist.php" class="inline-btn">view playlist</a>
                     <button type="submit"><i class="far fa-heart"></i><span>like</span></button>
                 </form>
                 <div class="description">
@@ -121,7 +55,7 @@
 
             <div class="box">
                 <div class="user">
-                    <img src="images/pic-1.jpg" alt="">
+                    <img src="/DACS2/images/pic-1.jpg" alt="">
                     <div>
                         <h3>Hoa handsome</h3>
                         <span>21-25-2022</span>
@@ -136,7 +70,7 @@
 
             <div class="box">
                 <div class="user">
-                    <img src="images/pic-1.jpg" alt="">
+                    <img src="/DACS2/images/pic-1.jpg" alt="">
                     <div>
                         <h3>John Deo</h3>
                         <span>21-25-2022</span>
@@ -147,7 +81,7 @@
 
             <div class="box">
                 <div class="user">
-                    <img src="images/pic-2.jpg" alt="">
+                    <img src="/DACS2/images/pic-2.jpg" alt="">
                     <div>
                         <h3>John Deo</h3>
                         <span>21-25-2022</span>
@@ -158,7 +92,7 @@
 
             <div class="box">
                 <div class="user">
-                    <img src="images/pic-3.jpg" alt="">
+                    <img src="/DACS2/images/pic-3.jpg" alt="">
                     <div>
                         <h3>John Deo</h3>
                         <span>21-25-2022</span>
@@ -169,7 +103,7 @@
 
             <div class="box">
                 <div class="user">
-                    <img src="images/pic-4.jpg" alt="">
+                    <img src="/DACS2/images/pic-4.jpg" alt="">
                     <div>
                         <h3>John Deo</h3>
                         <span>21-25-2022</span>
@@ -180,7 +114,7 @@
 
             <div class="box">
                 <div class="user">
-                    <img src="images/pic-5.jpg" alt="">
+                    <img src="/DACS2/images/pic-5.jpg" alt="">
                     <div>
                         <h3>John Deo</h3>
                         <span>21-25-2022</span>
@@ -197,19 +131,6 @@
 
     <!--comments section end-->
     
-    <!--footer-start-->
-    <footer class="footer">
-
-        &copy; copyright @ 2024 by <span>VKU</span> | all rights reserved
-
-    </footer>
-
-
-
-
+     <!--footer-start-->
+     <?php require_once './layout/footer.php' ?>
     <!--footer-end-->
-
-    <!--js link-->
-    <script src="js/style.js"></script>
-</body>
-</html>

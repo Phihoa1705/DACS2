@@ -1,73 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About us</title>
-    <!--font awsome cdn link-->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
-    <!--css link-->
-    <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
-
     <!--Header-->
-
-    <header class="header">
-        <section class="flex">
-            <a href="home.html">Educa.</a>
-
-            <form action="" method="post" class="search-form">
-                <input type="text" name="search_box" placeholder="Search courses">
-                <button type="submit" class="fas fa-search" name="search_box"></button>
-            </form>
-            <div class="icons">
-                <div id="menu-btn" class="fas fa-bars"></div>
-                <div id="search-btn" class="fas fa-search"></div>
-                <div id="user-btn" class="fas fa-user"></div>
-                <div id="toggle-btn" class="fas fa-sun"></div>
-            </div>
-
-            <div class="profile">
-                <img src="images/pic-1.jpg" alt="">
-                <h3>Hoa handsome</h3>
-                <span>Student</span>
-                <a href="profile.html" class="btn">view profile</a>
-                <div class="flex-btn">
-                    <a href="login.html" class="option-btn">login</a>
-                    <a href="register.html" class="option-btn">register</a>
-                </div>
-            </div>
-
-        </section>
-
-    </header>
-
-    <!--Side bar-->
-
-    <div class="side-bar">
-
-        <div class="close-side-bar">
-            <i class="fas fa-times"></i>
-        </div>
-
-        <div class="profile">
-            <img src="images/pic-1.jpg" alt="">
-            <h3>Hoa handsome</h3>
-            <span>Student</span>
-            <a href="profile.html" class="btn">view profile</a>
-        </div>
-
-        <div class="navbar">
-            <a href="home.html"><i class="fas fa-home"></i><span>home</span></a>
-            <a href="about.html"><i class="fas fa-question"></i><span>about us</span></a>
-            <a href="courses.html"><i class="fas fa-graduation-cap"></i><span>courses</span></a>
-            <a href="teachers.html"><i class="fas fa-chalkboard-user"></i><span>teachers</span></a>
-            <a href="contact.html"><i class="fas fa-headset"></i><span>contact us</span></a>
-        </div>
-
-    </div>
-    <!--Side bar section end-->
+    <?php require_once './layout/header.php' ?>
+    <!--Side bar start-->
+    <?php require_once './layout/slidebar.php' ?>
+    <!--Side bar end-->
 
 
     <!--about section start-->
@@ -77,13 +12,13 @@
         <div class="row">
             
             <div class="image">
-                <img src="images/about-img.svg" alt="">
+                <img src="/DACS2/images/about-img.svg" alt="">
             </div>
 
             <div class="content">
                 <h3>Why choose us?</h3>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <a href="courses.html" class="inline-btn">our courses</a>
+                <a href="/DACS2/php/courses.php" class="inline-btn">our courses</a>
             </div>
         
         </div>
@@ -140,7 +75,7 @@
                 <div class="box">
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                     <div class="user">
-                        <img src="images/pic-2.jpg" alt="">
+                        <img src="/DACS2/images/pic-2.jpg" alt="">
                         <div>
                             <h3>John Deo</h3>
                             <div class="stars">
@@ -157,7 +92,7 @@
                 <div class="box">
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                     <div class="user">
-                        <img src="images/pic-3.jpg" alt="">
+                        <img src="/DACS2/images/pic-3.jpg" alt="">
                         <div>
                             <h3>John Deo</h3>
                             <div class="stars">
@@ -174,7 +109,7 @@
                 <div class="box">
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                     <div class="user">
-                        <img src="images/pic-4.jpg" alt="">
+                        <img src="/DACS2/images/pic-4.jpg" alt="">
                         <div>
                             <h3>John Deo</h3>
                             <div class="stars">
@@ -191,7 +126,7 @@
                 <div class="box">
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                     <div class="user">
-                        <img src="images/pic-5.jpg" alt="">
+                        <img src="/DACS2/images/pic-5.jpg" alt="">
                         <div>
                             <h3>John Deo</h3>
                             <div class="stars">
@@ -208,7 +143,7 @@
                 <div class="box">
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                     <div class="user">
-                        <img src="images/pic-6.jpg" alt="">
+                        <img src="/DACS2/images/pic-6.jpg" alt="">
                         <div>
                             <h3>John Deo</h3>
                             <div class="stars">
@@ -225,7 +160,7 @@
                 <div class="box">
                     <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
                     <div class="user">
-                        <img src="images/pic-7.jpg" alt="">
+                        <img src="/DACS2/images/pic-7.jpg" alt="">
                         <div>
                             <h3>John Deo</h3>
                             <div class="stars">
@@ -248,16 +183,6 @@
     <!--review section end-->
 
     
-    <!--footer-start-->
-    <footer class="footer">
-
-        &copy; copyright @ 2024 by <span>VKU</span> | all rights reserved
-
-    </footer>
-
+     <!--footer-start-->
+     <?php require_once './layout/footer.php' ?>
     <!--footer-end-->
-
-    <!--js link-->
-    <script src="js/style.js"></script>
-</body>
-</html>
