@@ -17,7 +17,7 @@
 
     <header class="header">
       <section class="flex">
-        <a href="/DACS2/php/home.php">Education</a>
+        <a href="/DACS2/home.php" class="logo">Education</a>
 
         <form action="" method="post" class="search-form">
           <input type="text" name="search_box" placeholder="Search courses" />
@@ -38,10 +38,10 @@
           <img src="/DACS2/images/pic-1.jpg" alt="" />
           <h3>Hoa handsome</h3>
           <span>Student</span>
-          <a href="/DACS2/php/profile.php" class="btn">view profile</a>
+          <a href="/DACS2/profile.php" class="btn">view profile</a>
           <div class="flex-btn">
-            <a href="/DACS2/php/login.php" class="option-btn">login</a>
-            <a href="/DACS2/php/register.php" class="option-btn">register</a>
+            <a href="/DACS2/login.php" class="option-btn">login</a>
+            <a href="/DACS2/register.php" class="option-btn">register</a>
           </div>
         </div>
       </section>
