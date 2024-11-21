@@ -1,34 +1,38 @@
-    <!--Header-->
-    <?php require_once './php/layout/header.php' ?>
-    <!--Side bar start-->
-    <?php require_once './php/layout/slidebar.php' ?>
-    <!--Side bar end-->
-    
-    <!--update profile section start-->
+<?php
 
-    <section class="form-container">
+  require_once './php/components/connect.php';
 
-        <form action="" method="post">
-            <h3>update profile</h3>
-            <p>your name</p>
-            <input type="name" name="name" placeholder="Hoa handsome" maxlength="100" class="box">
-            <p>your email</p>
-            <input type="email" name="name" placeholder="hoahandsome@gmail.com" maxlength="100" class="box">
-            <p>old password</p>
-            <input type="password" name="old_pass" placeholder="enter your old password" maxlength="50" class="box">
-            <p>new password</p>
-            <input type="password" name="new_pass" placeholder="enter your new password" maxlength="50" class="box">
-            <p>confirm password</p>
-            <input type="password" name="c_pass" placeholder="confirm your new password" maxlength="50" class="box">
-            <p>update image</p>
-            <input type="file" name="image" accept="image/*" class="box">
-            <input type="submit" name="submit" value="update profile" class="btn">
-        </form>
+  if(isset($_COOKIE['user_id'])){
+    $user_id = $_COOKIE['user_id'];
+  } else {
+    $user_id = '';
+    header('location: home.php');
+  }
 
-    </section>
+?>
 
-    <!--update profile section start-->
-    
-     <!--footer-start-->
-     <?php require_once './php/layout/footer.php' ?>
-    <!--footer-end-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Update</title>
+
+  <!-- font awesome cdn link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- custom css file -->
+     <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <!-- Header section start -->
+   <?php require_once './php/components/user_header.php'; ?>
+  <!-- Header section end -->
+
+
+
+  <!-- Footer section start -->
+   <?php require_once './php/components/footer.php'; ?>
+  <!-- Footer section end -->
+  <script src="./js/style.js"></script>
+</body>
+</html>

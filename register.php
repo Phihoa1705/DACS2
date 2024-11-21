@@ -1,32 +1,37 @@
-    <!--Header-->
-    <?php require_once './php/layout/header.php' ?>
-    <!--Side bar start-->
-    <?php require_once './php/layout/slidebar.php' ?>
-    <!--Side bar end-->
+<?php
 
-    <!--register section start-->
+  require_once './php/components/connect.php';
 
-    <section class="form-container">
+  if(isset($_COOKIE['user_id'])){
+    $user_id = $_COOKIE['user_id'];
+  } else {
+    $user_id = '';
+  }
 
-        <form action="" method="post" enctype="multipart/form-data">
-            <h3>register</h3>
-            <p>your name <span>*</span></p>
-            <input type="name" name="name" placeholder="enter your name" maxlength="100" required class="box">
-            <p>your email <span>*</span></p>
-            <input type="email" name="name" placeholder="enter your email" maxlength="100" required class="box">
-            <p>your password <span>*</span></p>
-            <input type="password" name="pass" placeholder="enter your password" maxlength="50" required class="box">
-            <p>confirm password <span>*</span></p>
-            <input type="password" name="c_pass" placeholder="confirm your new password" maxlength="50" required class="box">
-            <p>select image <span>*</span></p>
-            <input type="file" name="image" accept="image/*" required class="box">
-            <input type="submit" name="submit" value="register now" class="btn">
-        </form>
+?>
 
-    </section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Register</title>
 
-    <!--register section end-->
-    
-    <!--footer-start-->
-    <?php require_once './php/layout/footer.php' ?>
-    <!--footer-end-->
+  <!-- font awesome cdn link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- custom css file -->
+     <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <!-- Header section start -->
+   <?php require_once './php/components/user_header.php'; ?>
+  <!-- Header section end -->
+
+
+
+  <!-- Footer section start -->
+   <?php require_once './php/components/footer.php'; ?>
+  <!-- Footer section end -->
+  <script src="./js/style.js"></script>
+</body>
+</html>

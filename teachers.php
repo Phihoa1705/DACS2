@@ -1,144 +1,37 @@
-    <!--Header-->
-    <?php require_once './php/layout/header.php' ?>
-    <!--Side bar start-->
-    <?php require_once './php/layout/slidebar.php' ?>
-    <!--Side bar end-->
-    
-    <!--teacher section start-->
+<?php
 
-    <section class="teachers">
-        <h1 class="heading">expert tutors</h1>
-        <form action="" method="post" class="search-tutor">
-            <input type="text" name="search_box" maxlength="100" placeholder="search tutor..." required>
-            <button type="submit" name="search-tutor" class="fas fa-search"></button>
-        </form>
+  require_once './php/components/connect.php';
 
-        <div class="box-container">
-            <div class="box offer">
-                <h3 class="title">become a tutor</h3>
-                <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Animi veritatis eius, odio est provident laudantium aspernatur.</p>
-                <a href="register.php" class="inline-btn">get started</a>
-            </div>
+  if(isset($_COOKIE['user_id'])){
+    $user_id = $_COOKIE['user_id'];
+  } else {
+    $user_id = '';
+  }
 
-            <div class="box">
-                <div class="tutor">
-                    <img src="/DACS2/images/pic-2.jpg" alt="">
-                    <div>
-                        <h3>John Deo</h3>
-                        <span>developer</span>
-                    </div>
-                </div>
-                <p>playlists: <span>4</span></p>
-                <p>total videos: <span>18</span></p>
-                <p>total likes: <span>1208</span></p>
-                <a href="teacher_profile.php" class="inline-btn">view profile</a>
-            </div>
+?>
 
-            <div class="box">
-                <div class="tutor">
-                    <img src="/DACS2/images/pic-3.jpg" alt="">
-                    <div>
-                        <h3>John Deo</h3>
-                        <span>developer</span>
-                    </div>
-                </div>
-                <p>playlists: <span>4</span></p>
-                <p>total videos: <span>18</span></p>
-                <p>total likes: <span>1208</span></p>
-                <a href="teacher_profile.php" class="inline-btn">view profile</a>
-            </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tearchers</title>
 
-            <div class="box">
-                <div class="tutor">
-                    <img src="/DACS2/images/pic-4.jpg" alt="">
-                    <div>
-                        <h3>John Deo</h3>
-                        <span>developer</span>
-                    </div>
-                </div>
-                <p>playlists: <span>4</span></p>
-                <p>total videos: <span>18</span></p>
-                <p>total likes: <span>1208</span></p>
-                <a href="teacher_profile.php" class="inline-btn">view profile</a>
-            </div>
-
-            <div class="box">
-                <div class="tutor">
-                    <img src="/DACS2/images/pic-5.jpg" alt="">
-                    <div>
-                        <h3>John Deo</h3>
-                        <span>developer</span>
-                    </div>
-                </div>
-                <p>playlists: <span>4</span></p>
-                <p>total videos: <span>18</span></p>
-                <p>total likes: <span>1208</span></p>
-                <a href="teacher_profile.php" class="inline-btn">view profile</a>
-            </div>
-
-            <div class="box">
-                <div class="tutor">
-                    <img src="/DACS2/images/pic-6.jpg" alt="">
-                    <div>
-                        <h3>John Deo</h3>
-                        <span>developer</span>
-                    </div>
-                </div>
-                <p>playlists: <span>4</span></p>
-                <p>total videos: <span>18</span></p>
-                <p>total likes: <span>1208</span></p>
-                <a href="teacher_profile.php" class="inline-btn">view profile</a>
-            </div>
-
-            <div class="box">
-                <div class="tutor">
-                    <img src="/DACS2/images/pic-7.jpg" alt="">
-                    <div>
-                        <h3>John Deo</h3>
-                        <span>developer</span>
-                    </div>
-                </div>
-                <p>playlists: <span>4</span></p>
-                <p>total videos: <span>18</span></p>
-                <p>total likes: <span>1208</span></p>
-                <a href="teacher_profile.php" class="inline-btn">view profile</a>
-            </div>
-
-            <div class="box">
-                <div class="tutor">
-                    <img src="/DACS2/images/pic-8.jpg" alt="">
-                    <div>
-                        <h3>John Deo</h3>
-                        <span>developer</span>
-                    </div>
-                </div>
-                <p>playlists: <span>4</span></p>
-                <p>total videos: <span>18</span></p>
-                <p>total likes: <span>1208</span></p>
-                <a href="teacher_profile.php" class="inline-btn">view profile</a>
-            </div>
-
-            <div class="box">
-                <div class="tutor">
-                    <img src="/DACS2/images/pic-1.jpg" alt="">
-                    <div>
-                        <h3>John Deo</h3>
-                        <span>developer</span>
-                    </div>
-                </div>
-                <p>playlists: <span>4</span></p>
-                <p>total videos: <span>18</span></p>
-                <p>total likes: <span>1208</span></p>
-                <a href="teacher_profile.php" class="inline-btn">view profile</a>
-            </div>
-
-        </div>
-
-    </section>
+  <!-- font awesome cdn link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- custom css file -->
+     <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <!-- Header section start -->
+   <?php require_once './php/components/user_header.php'; ?>
+  <!-- Header section end -->
 
 
-    <!--teacher section start-->
 
-    <!--footer-start-->
-    <?php require_once './php/layout/footer.php' ?>
-        <!--footer-end-->   
+  <!-- Footer section start -->
+   <?php require_once './php/components/footer.php'; ?>
+  <!-- Footer section end -->
+  <script src="./js/style.js"></script>
+</body>
+</html>

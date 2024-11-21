@@ -1,26 +1,37 @@
-    <!--Header-->
-    <?php require_once './layout/header.php' ?>
-    <!--Side bar start-->
-    <?php require_once './layout/slidebar.php' ?>
-    <!--Side bar end-->
+<?php
 
-    <!--login section start-->
+  require_once './php/components/connect.php';
 
-    <section class="form-container">
+  if(isset($_COOKIE['user_id'])){
+    $user_id = $_COOKIE['user_id'];
+  } else {
+    $user_id = '';
+  }
 
-        <form action="" method="post">
-            <h3>welcome back!</h3>
-            <p>your email <span>*</span></p>
-            <input type="email" name="name" placeholder="enter your email" maxlength="100" required class="box">
-            <p>your password <span>*</span></p>
-            <input type="password" name="pass" placeholder="enter your password" maxlength="50" required class="box">
-            <input type="submit" name="submit" value="login now" class="btn">
-        </form>
+?>
 
-    </section>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login</title>
 
-    <!--login section end-->
-    
-     <!--footer-start-->
-     <?php require_once './layout/footer.php' ?>
-    <!--footer-end-->
+  <!-- font awesome cdn link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- custom css file -->
+     <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <!-- Header section start -->
+   <?php require_once './php/components/user_header.php'; ?>
+  <!-- Header section end -->
+
+
+
+  <!-- Footer section start -->
+   <?php require_once './php/components/footer.php'; ?>
+  <!-- Footer section end -->
+  <script src="./js/style.js"></script>
+</body>
+</html>

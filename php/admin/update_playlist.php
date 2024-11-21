@@ -92,7 +92,7 @@ if(isset($_COOKIE['tutor_id'])){
     <!-- header section link -->
     <?php require_once '../components/admin_header.php'; ?>
     <!-- Update playlist section starts -->
-    <section class="playlist-form">
+    <section class="crud-form">
         <h1 class="heading">Update Playlist</h1>
         <?php
             $select_playlist = $conn->prepare("SELECT * FROM playlist WHERE playlist_id = ?");
@@ -119,7 +119,7 @@ if(isset($_COOKIE['tutor_id'])){
             <textarea name="description" class="box" required cols="30" rows="10" placeholder="enter playlist description" maxlength="1000"><?php echo $fetch_playlist['description']; ?></textarea>
 
             <p>update thumnail </p>
-            <img src="../uploaded_files/<?php echo $fetch_playlist['thumb']; ?>" alt="">
+            <img src="../uploaded_files/<?php echo $fetch_playlist['thumb']; ?>" class="media" alt="">
             <input type="file" name="thumb" accept="image/*"  class="box">
             <input type="submit" value="update playlist" name="update" class="btn">
             <div class="flex-btn">

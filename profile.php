@@ -1,67 +1,38 @@
-    <!--Header-->
-    <?php require_once './php/layout/header.php' ?>
-    <!--Side bar start-->
-    <?php require_once './php/layout/slidebar.php' ?>
-    <!--Side bar end-->
+<?php
 
-    <!--profile section starts-->
+  require_once './php/components/connect.php';
 
-    <section class="profile">
+  if(isset($_COOKIE['user_id'])){
+    $user_id = $_COOKIE['user_id'];
+  } else {
+    $user_id = '';
+    header('location: home.php');
+  }
 
-        <h1 class="heading">profile details</h1>
+?>
 
-        <div class="details">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile</title>
 
-            <div class="user">
-                <img src="/DACS2/images/pic-1.jpg" alt="">
-                <h3>Hoa handsome</h3>
-                <p>student</p>
-                <a href="update.php" class="inline-btn">update profile</a>
-            </div>
+  <!-- font awesome cdn link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- custom css file -->
+     <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <!-- Header section start -->
+   <?php require_once './php/components/user_header.php'; ?>
+  <!-- Header section end -->
 
-            <div class="box-container">
 
-                <div class="box">
-                    <div class="flex">
-                            <i class="fas fa-bookmark"></i>
-                        <div>
-                            <h3>3</h3>
-                            <span>saved playlists</span>
-                        </div>
-                    </div>
-                    <a href="#" class="inline-btn">view playlists</a>
-                </div>
 
-                <div class="box">
-                    <div class="flex">
-                            <i class="fas fa-heart"></i>
-                        <div>
-                            <h3>55</h3>
-                            <span>liked tutorials</span>
-                        </div>
-                    </div>
-                    <a href="#" class="inline-btn">view liked</a>
-                </div>
-
-                <div class="box">
-                    <div class="flex">
-                            <i class="fas fa-comment"></i>
-                        <div>
-                            <h3>15</h3>
-                            <span>video comments</span>
-                        </div>
-                    </div>
-                    <a href="#" class="inline-btn">view comments</a>
-                </div>
-
-            </div>
-
-        </div>
-
-    </section>
-
-    <!--profile section starts-->
-    
-    <!--footer-start-->
-    <?php require_once './php/layout/footer.php' ?>
-    <!--footer-end-->
+  <!-- Footer section start -->
+   <?php require_once './php/components/footer.php'; ?>
+  <!-- Footer section end -->
+  <script src="./js/style.js"></script>
+</body>
+</html>

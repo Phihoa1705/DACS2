@@ -1,26 +1,51 @@
-    <!--Header-->
-    <?php require_once './php/layout/header.php' ?>
-    <!--Side bar start-->
-    <?php require_once './php/layout/slidebar.php' ?>
-    <!--Side bar end-->
+<?php
 
+  require_once './php/components/connect.php';
 
-    <!--about section start-->
+  if(isset($_COOKIE['user_id'])){
+    $user_id = $_COOKIE['user_id'];
+  } else {
+    $user_id = '';
+  }
 
-    <section class="about">
-        
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>About Us</title>
+
+  <!-- font awesome cdn link -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!-- custom css file -->
+     <link rel="stylesheet" href="./css/style.css">
+</head>
+<body>
+  <!-- Header section start -->
+   <?php require_once './php/components/user_header.php'; ?>
+  <!-- Header section end -->
+
+  <!-- About section start -->
+   <section class="about">
         <div class="row">
-            
+
             <div class="image">
-                <img src="/DACS2/images/about-img.svg" alt="">
+                <img src="./images/about-img.svg" alt="">
             </div>
 
             <div class="content">
-                <h3>Why choose us?</h3>
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                <a href="courses.php" class="inline-btn">our courses</a>
+                <h3>why choose us?</h3>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolore deleniti quibusdam,
+                     aliquam autem suscipit amet sapiente sit culpa doloribus odio consectetur sint optio fuga? 
+                     Tenetur at fuga vero possimus maiores?
+                </p>
+
+                <a href="courses.php" class="inline-btn">our course</a>
             </div>
-        
+
         </div>
 
         <div class="box-container">
@@ -36,7 +61,7 @@
             <div class="box">
                 <i class="fas fa-user-graduate"></i>
                 <div>
-                    <h3>+25kk</h3>
+                    <h3>+25k</h3>
                     <span>brilliants students</span>
                 </div>
             </div>
@@ -53,136 +78,79 @@
                 <i class="fas fa-briefcase"></i>
                 <div>
                     <h3>100%</h3>
-                    <span>job placement </span>
+                    <span>job placement</span>
                 </div>
             </div>
 
         </div>
-    </section>
-    
-    <!--about section end-->
+   </section>
+  <!-- About section end -->
 
-
-    <!--review section start-->
-
-    <section class="reviews">
+  <!-- Review section starts -->
+   <section class="reviews">
 
         <h1 class="heading">student's reviews</h1>
 
-        
-            <div class="box-container">
+        <div class="box-container">
 
-                <div class="box">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    <div class="user">
-                        <img src="/DACS2/images/pic-2.jpg" alt="">
-                        <div>
-                            <h3>John Deo</h3>
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
+            <div class="box">
+                <div class="user">
+                    <img src="./images/pic-1.jpg" alt="">
+                    <div>
+                        <h3>Danh</h3>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
                         </div>
                     </div>
                 </div>
-                
-                <div class="box">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    <div class="user">
-                        <img src="/DACS2/images/pic-3.jpg" alt="">
-                        <div>
-                            <h3>John Deo</h3>
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div> 
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore laborum, qui sit cumque non recusandae quisquam quidem vitae explicabo maxime?</p>
+            </div>
 
-                <div class="box">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    <div class="user">
-                        <img src="/DACS2/images/pic-4.jpg" alt="">
-                        <div>
-                            <h3>John Deo</h3>
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
+            <div class="box">
+                <div class="user">
+                    <img src="./images/pic-3.jpg" alt="">
+                    <div>
+                        <h3>Phúc</h3>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
                         </div>
                     </div>
                 </div>
-                
-                <div class="box">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    <div class="user">
-                        <img src="/DACS2/images/pic-5.jpg" alt="">
-                        <div>
-                            <h3>John Deo</h3>
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div> 
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore laborum, qui sit cumque non recusandae quisquam quidem vitae explicabo maxime?</p>
+            </div>
 
-                <div class="box">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    <div class="user">
-                        <img src="/DACS2/images/pic-6.jpg" alt="">
-                        <div>
-                            <h3>John Deo</h3>
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
+            <div class="box">
+                <div class="user">
+                    <img src="./images/pic-6.jpg" alt="">
+                    <div>
+                        <h3>Bảo</h3>
+                        <div class="stars">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
                         </div>
                     </div>
                 </div>
-                
-                <div class="box">
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                    <div class="user">
-                        <img src="/DACS2/images/pic-7.jpg" alt="">
-                        <div>
-                            <h3>John Deo</h3>
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                        </div>
-                    </div>
-                </div> 
-           
-           
+                <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Dolore laborum, qui sit cumque non recusandae quisquam quidem vitae explicabo maxime?</p>
+            </div>
+
         </div>
+   </section>
+  <!-- Review section end -->
 
-    </section>
-
-
-    <!--review section end-->
-
-    
-     <!--footer-start-->
-     <?php require_once './php/layout/footer.php' ?>
-    <!--footer-end-->
+  <!-- Footer section start -->
+   <?php require_once './php/components/footer.php'; ?>
+  <!-- Footer section end -->
+  <script src="./js/style.js"></script>
+</body>
+</html>

@@ -905,6 +905,9 @@ section {
   .header .flex .search-form.active {
     clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
   }
+  .view-content .content video {
+    height: auto;
+  }
 }
 
 @media (max-width: 450px) {
