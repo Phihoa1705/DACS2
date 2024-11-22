@@ -70,7 +70,7 @@
         }
       ?>
     </div>
-   </section>
+</section>
   <!-- courses section end -->
 
   <!-- Footer section start -->

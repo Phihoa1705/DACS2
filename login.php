@@ -27,7 +27,7 @@
    <?php require_once './php/components/user_header.php'; ?>
   <!-- Header section end -->
 
-
+  
 
   <!-- Footer section start -->
    <?php require_once './php/components/footer.php'; ?>

@@ -12,9 +12,9 @@
 <!-- header section start -->
     <header class="header">
         <section class="flex">
-            <a href="../../home.php" class="logo">Education.</a>
+            <a href="home.php" class="logo">Education.</a>
 
-            <form action="../../sreach_course.php" method="post" class="search-form">
+            <form action="sreach_course.php" method="post" class="search-form">
                 <input type="text" placeholder="search here..." name="search_box" id="" required maxlength="100">
                 <button type="submit" class="fas fa-search" name="search_btn"></button>
             </form>
@@ -36,21 +36,20 @@
                         $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
                 ?>
 
-                <img src="../uploaded_files/<?php echo $fetch_profile['image']; ?>" alt="">
+                <img src="php/uploaded_files"<?php echo $fetch_profile['image']; ?>" alt="">
 
-                <h3><?php echo $fetch_profile['user_name']; ?></h3>
+                <h3><?php echo $fetch_profile['name']; ?></h3>
 
-                <span><?php echo $fetch_profile['profession']; ?></span>
+                <span>student</span>
 
-                <a href="../admin/profile.php" class="btn">View Profile</a>
+                <a href="profile.php" class="btn">View Profile</a>
 
                 <div class="flex-btn">
-                    <a href="../admin/login.php" class="option-btn">login</a>
-                    <a href="../admin/register.php" class="option-btn">register</a>
+                    <a href="login.php" class="option-btn">login</a>
+                    <a href="register.php" class="option-btn">register</a>
                 </div>
 
-                <a href="../components/admin_logout.php" 
-                onclick="return confirm('logout from this website?');" class="delete-btn">logout</a>
+                <a href="../components/user_logout.php" onclick="return confirm('logout from this website?');" class="delete-btn">logout</a>
 
                 <?php
                 } else {       
@@ -59,8 +58,8 @@
                 <h3>please login first</h3>
 
                 <div class="flex-btn">
-                    <a href="../admin/login.php" class="option-btn">login</a>
-                    <a href="../admin/register.php" class="option-btn">register</a>
+                    <a href="login.php" class="option-btn">login</a>
+                    <a href="register.php" class="option-btn">register</a>
                 </div>
 
                 <?php
@@ -90,11 +89,11 @@
 
         <img src="../uploaded_files/<?php echo $fetch_profile['image'] ?>" alt="">
 
-        <h3><?php echo $fetch_profile['user_name'] ?></h3>
+        <h3><?php echo $fetch_profile['name'] ?></h3>
 
-        <span><?php echo $fetch_profile['profession'] ?></span>
+        <span>student</span>
 
-        <a href="../admin/profile.php" class="btn">View Profile</a>
+        <a href="profile.php" class="btn">View Profile</a>
         
         <?php
              } else {       
@@ -103,8 +102,8 @@
         <h3>please login first</h3>
 
         <div class="flex-btn">
-            <a href="../admin/login.php" class="option-btn">login</a>
-            <a href="../admin/register.php" class="option-btn">register</a>
+            <a href="login.php" class="option-btn">login</a>
+            <a href="register.php" class="option-btn">register</a>
         </div>
 
         <?php

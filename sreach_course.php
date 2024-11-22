@@ -27,7 +27,59 @@
    <?php require_once './php/components/user_header.php'; ?>
   <!-- Header section end -->
 
+  <!-- Search course section start -->
 
+  <section class="course">
+    <h1 class="heading">Search result courses</h1>
+    <div class="box-container">
+      <?php
+      if(isset($_POST['search_box']) or isset($_POST['search_btn'])) {
+      $search_box = $_POST['search_box'];
+    
+        $select_courses = $conn->prepare("SELECT * FROM playlist WHERE title LIKE '%$search_box%' AND status = ? 
+        ORDER BY creation_date DESC");
+        $select_courses->execute(['active']);
+
+        if($select_courses->rowCount() > 0) {
+          while($fetch_course = $select_courses->fetch(PDO::FETCH_ASSOC)) {
+            $course_id = $fetch_course['playlist_id'];
+
+            $count_course = $conn->prepare('SELECT * FROM content WHERE playlist_id = ?');
+            $count_course->execute([$course_id]);
+            $total_course = $count_course->rowCount();
+
+            $select_tutor = $conn->prepare("SELECT * FROM tutors WHERE tutor_id = ?");
+            $select_tutor->execute([$fetch_course['tutor_id']]);
+            $fetch_tutor = $select_tutor->fetch(PDO::FETCH_ASSOC);
+      ?>
+      <div class="box">
+          <div class="tutor">
+            <img src="./php/uploaded_files/<?php echo $fetch_tutor['image']; ?>" alt="">
+            <div>
+              <h3><?php echo $fetch_tutor['tutor_name']; ?></h3>
+              <span><?php echo $fetch_course['creation_date']; ?></span>
+            </div>
+          </div>
+          <div class="thumb">
+            <span><?php echo $total_course;?></span>
+            <img src="./php/uploaded_files/<?php echo $fetch_course['thumb'];?>" alt="">
+          </div>
+          <h3 class="title"><?php echo $fetch_course['title'];?></h3>
+          <a href="playlist.php?get_id=<?php echo $course_id; ?>" class="inline-btn">view playlist</a>
+      </div>
+      <?php
+          }
+        } else {
+          echo '<p class="emtpy">no courses added yet!</p>';
+        }
+      }else {
+        echo '<p class="emtpy">no courses found!</p>';
+      }
+      ?>
+    </div>
+      </section>
+
+  <!-- Search course section start -->
 
   <!-- Footer section start -->
    <?php require_once './php/components/footer.php'; ?>

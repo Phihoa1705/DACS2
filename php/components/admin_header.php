@@ -117,8 +117,8 @@
         <a href="../admin/playlists.php"><i class="fas fa-bars-staggered"></i><span>playlist</span></a>
         <a href="../admin/contents.php"><i class="fas fa-graduation-cap"></i><span>contents</span></a>
         <a href="../admin/comments.php"><i class="fas fa-comment"></i><span>comments</span></a>
-        <a href="./admin_logout.php" onclick="return confirm('logout from this website?');">
-            <i class="fas fa-right-from-bracket"></i><span>logout</span></a>
+        <a href="../components/admin_logout.php" onclick="return confirm('logout from this website?');"><i class="fas fa-right-from-bracket"></i><span>logout</span></a>
+        
     </nav>
 
  </div>
