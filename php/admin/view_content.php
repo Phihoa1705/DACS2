@@ -154,7 +154,8 @@ if(isset($_POST['delete_comment'])){
                <p class="comment-box"><?php echo $fetch_comment['comment'];?></p>
                <form action="" method="post">
                   <input type="hidden" name="comment_id" value="<?php echo $fetch_comment['content_id'];?>">
-                  <input type="submit" value="delete comment" name="delete_comment" class="inline-delete-btn">
+                  <input type="submit" value="delete comment" name="delete_comment"
+                  onclick="return confirm('delete this comnment?');" class="inline-delete-btn">
                </form>
             </div>
             <?php

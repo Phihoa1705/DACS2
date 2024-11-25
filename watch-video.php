@@ -47,7 +47,65 @@ if(isset($_POST['like_content'])){
 
 
 }
+if(isset($_POST['add_comment'])) {
+  $comment_id = uniqid();
+  $comment_box = $_POST['comment_box'];
+  $comment_box = filter_var($comment_box, FILTER_SANITIZE_STRING);
 
+  $select_content_tutor = $conn->prepare("SELECT * FROM content WHERE content_id = ?");
+  $select_content_tutor->execute([$get_id]);
+  $fetch_content_tutor_id = $select_content_tutor->fetch(PDO::FETCH_ASSOC);
+  $content_tutor_id = $fetch_content_tutor_id['tutor_id'];
+
+  $verify_comment = $conn->prepare("SELECT * FROM comments WHERE content_id = ? AND user_id = ? 
+  AND tutor_id = ? AND comment = ?");
+  $verify_comment->execute([$get_id, $user_id, $content_tutor_id, $comment_box]);
+
+  if($verify_comment->rowCount() > 0) {
+    $message[] = 'comment already added!'; 
+  } else {
+    $add_comment = $conn->prepare("INSERT INTO comments(comment_id,content_id,user_id, tutor_id, comment)
+    VALUES(?,?, ?, ?, ?)");
+    $add_comment->execute([$comment_id,$get_id,$user_id, $content_tutor_id, $comment_box]);
+
+    $message[] = 'comment added successfully!';
+  }
+} 
+if(isset($_POST['delete_comment'])){
+  $delete_id = $_POST['comment_id'];
+  $delete_id = filter_var($delete_id, FILTER_SANITIZE_STRING); 
+
+  $verify_comment = $conn->prepare("SELECT * FROM comments WHERE comment_id = ?");
+  $verify_comment->execute([$delete_id]);
+
+  if($verify_comment->rowCount() > 0){
+     $delete_comment = $conn->prepare("DELETE FROM comments WHERE comment_id = ?");
+     $delete_comment->execute([$delete_id]);
+     $message[] = 'comment deleted successfully';
+     header('location:comments.php');
+  } else {
+     $message[] = 'comment already deleted';
+  }
+}
+
+if(isset($_POST['edit_comment'])) {
+  $edit_id = $_POST['edit_id'];
+  $edit_id = filter_var($edit_id, FILTER_SANITIZE_STRING);
+
+  $comment_box = $_POST['comment_box'];
+  $comment_box = filter_var($comment_box, FILTER_SANITIZE_STRING);
+
+  $verify_edit_comment = $conn->prepare("SELECT * FROM comments WHERE comment_id = ? AND comment = ?");
+  $verify_edit_comment->execute([$edit_id, $comment_box]);
+
+  if($verify_edit_comment->rowCount() > 0) {
+    $message[] = 'comment already added!';
+  } else {
+    $update_comment = $conn->prepare("UPDATE comments SET comment = ? WHERE comment_id = ?");
+    $update_comment->execute([$comment_box, $edit_id]);
+    $message[] = 'comment updated successfully!';
+  }
+}
 ?>
 
 <!DOCTYPE html>
@@ -66,7 +124,34 @@ if(isset($_POST['like_content'])){
   <!-- Header section start -->
    <?php require_once './php/components/user_header.php'; ?>
   <!-- Header section end -->
+  <?php
+    if(isset($_POST['update_comment'])) {
+      $update_id = $_POST['comment_id'];
+      $update_id = filter_var($update_id, FILTER_SANITIZE_STRING);
+      $select_update_comment = $conn->prepare("SELECT * FROM comments WHERE comment_id = ? LIMIT 1");
 
+      $select_update_comment->execute([$update_id]);
+      $fetch_update_comment = $select_update_comment->fetch(PDO::FETCH_ASSOC);
+  ?>
+  <section class="comment-form">
+    <h1 class="heading">update comments</h1>
+
+    <form action="" method="post">
+      <input type="hidden" name="edit_id" value="<?php echo $fetch_update_comment['comment_id']; ?>">
+      <textarea name="comment_box" class="box" rows="10" cols="30" require 
+        maxlength="1000" placeholder="enter your comment"><?php echo $fetch_update_comment['comment']; ?></textarea>
+      
+      <div class="flex-btn">
+        <a href="watch-video.php?get_id=<?php echo $get_id; ?>" class="inline-option-btn">cancel edit</a>  
+        <input type="submit" value="edit comment" name="edit_comment" class="inline-btn">
+      </div>
+
+    </form>
+
+  </section>
+  <?php
+    }
+  ?>
   <!-- watch video section starts -->
    <section class="watch-video">
     <?php
@@ -123,6 +208,63 @@ if(isset($_POST['like_content'])){
     ?>
    </section>
   <!-- watch video section end -->
+  
+  <section class="comment-form">
+    <h1 class="heading">add comments</h1>
+    <form action="" method="post">
+      <textarea name="comment_box" class="box" rows="10" cols="30" require 
+      maxlength="1000" placeholder="enter your comment"></textarea>
+      <input type="submit" value="add comment" name="add_comment" class="inline-btn">
+    </form>
+  </section>
+
+  <!-- Comments section start -->
+  <section class="comments">
+         <h1 class="heading">User comments</h1>
+         
+         <div class="box-container">
+            <?php
+               $select_comments = $conn->prepare("SELECT * FROM comments WHERE content_id = ?");
+               $select_comments->execute([$get_id]);
+               if($select_comments->rowCount() > 0) {
+                  while($fetch_comment = $select_comments->fetch(PDO::FETCH_ASSOC)) {
+                     $comment_id = $fetch_comment['comment_id'];
+                     $select_commentor = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
+                     $select_commentor->execute([$fetch_comment['user_id']]);
+                     $fetch_commentor = $select_commentor->fetch(PDO::FETCH_ASSOC);
+            ?>
+            <div class="box" <?php if($fetch_comment['user_id'] == $user_id) {
+                  echo 'style:"order: 1-;"';
+                } ?>>
+               <div class="user">
+                  <img src="./php/uploaded_files/<?php echo $fetch_commentor['image'];?>" alt="">
+                  <div>
+                     <h3><?php echo $fetch_commentor['name'];?></h3>
+                     <span><?php echo $fetch_comment['creation_date'];?></span>
+                  </div>
+               </div>
+               <p class="comment-box"><?php echo $fetch_comment['comment'];?></p>
+               <?php 
+                if($fetch_comment['user_id'] == $user_id) {
+               ?>
+               <form action="" method="post">
+                  <input type="hidden" name="comment_id" value="<?php echo $fetch_comment['comment_id'];?>">
+                  <input type="submit" value="update comment" name="update_comment" class="inline-option-btn">
+                  <input type="submit" value="delete comment" name="delete_comment" class="inline-delete-btn"
+                  onclick="return confirm('delete this comnment?');">
+                  
+               </form>
+               <?php } ?>
+            </div>
+            <?php
+                  }
+               } else{
+                  echo '<p class="empty">no comments added yet!</p>';
+               }
+            ?>
+         </div>
+  </section>
+    <!-- Comments section end -->
 
   <!-- Footer section start -->
    <?php require_once './php/components/footer.php'; ?>

@@ -36,7 +36,7 @@
                         $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
                 ?>
 
-                <img src="php/uploaded_files"<?php echo $fetch_profile['image']; ?>" alt="">
+                <img src="php/uploaded_files/<?php echo $fetch_profile['image']; ?>" alt="">
 
                 <h3><?php echo $fetch_profile['name']; ?></h3>
 
@@ -49,7 +49,7 @@
                     <a href="register.php" class="option-btn">register</a>
                 </div>
 
-                <a href="../components/user_logout.php" onclick="return confirm('logout from this website?');" class="delete-btn">logout</a>
+                <a href="php/components/user_logout.php" onclick="return confirm('logout from this website?');" class="delete-btn">logout</a>
 
                 <?php
                 } else {       
@@ -87,7 +87,8 @@
                 $fetch_profile = $select_profile->fetch(PDO::FETCH_ASSOC);
         ?>
 
-        <img src="../uploaded_files/<?php echo $fetch_profile['image'] ?>" alt="">
+        <img src="php/uploaded_files/<?php echo $fetch_profile['image']; ?>" alt="">
+
 
         <h3><?php echo $fetch_profile['name'] ?></h3>
 

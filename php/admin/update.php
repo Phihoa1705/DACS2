@@ -41,7 +41,7 @@ if(isset($_COOKIE['tutor_id'])){
         $message[] = 'profession updated successfully!';
     }
     
-    if(!empty($email )) {
+    if(!empty($email)) {
 
         $select_turor_email = $conn->prepare('SELECT * FROM tutors WHERE email = ?');
         $select_turor_email->execute([$email]);
@@ -135,55 +135,55 @@ if(isset($_COOKIE['tutor_id'])){
     <!-- update section starts -->
 
     <section class="form-container">
-            <form action="" method="POST" enctype="multipart/form-data">
-                <h3>update profile</h3>
-                <div class="flex">
-                    <div class="col">
+        <form action="" method="POST" enctype="multipart/form-data">
+            <h3>update profile</h3>
+            <div class="flex">
+                <div class="col">
 
-                        <p>your name </p>
-                        <input type="text" name="name" class="box" 
-                        maxlength="50" placeholder="<?php echo $fetch_profile['tutor_name'];?>" id="">
+                    <p>your name </p>
+                    <input type="text" name="name" class="box" 
+                    maxlength="50" placeholder="<?php echo $fetch_profile['tutor_name'];?>" id="">
 
-                        <p>your profession </p>
-                        <select name="profession" class="box" id="">
-                            <option value="" 
-                            selected><?php echo $fetch_profile['profession'];?></option>
-                            <option value="developer">developer</option>
-                            <option value="desginer">desginer</option>
-                            <option value="musician">musician</option>
-                            <option value="biologist">biologist</option>
-                            <option value="teacher">teacher</option>
-                            <option value="engineer">engineer</option>
-                            <option value="lawyer">lawyer</option>
-                            <option value="accountant">accountant</option>
-                            <option value="doctor">doctor</option>
-                            <option value="journalist">journalist</option>
-                            <option value="photographer">photographer</option>
-                        </select>
+                    <p>your profession </p>
+                    <select name="profession" class="box" id="">
+                        <option value="" 
+                        selected><?php echo $fetch_profile['profession'];?></option>
+                        <option value="developer">developer</option>
+                        <option value="desginer">desginer</option>
+                        <option value="musician">musician</option>
+                        <option value="biologist">biologist</option>
+                        <option value="teacher">teacher</option>
+                        <option value="engineer">engineer</option>
+                        <option value="lawyer">lawyer</option>
+                        <option value="accountant">accountant</option>
+                        <option value="doctor">doctor</option>
+                        <option value="journalist">journalist</option>
+                        <option value="photographer">photographer</option>
+                    </select>
 
-                        <p>your email </p>
-                        <input type="email" name="email" class="box" 
-                        maxlength="50"  placeholder="<?php echo $fetch_profile['email'];?>" id="">
-                    </div>
-                    <div class="col">
-                        <p>old password </p>
-                        <input type="password" name="old_pass" class="box" 
-                        maxlength="50"  placeholder="enter your old password" id="">
-
-                        <p>your password </p>
-                        <input type="password" name="new_pass" class="box" 
-                        maxlength="50"  placeholder="enter your new password" id="">
-
-                        <p>confirm password </p>
-                        <input type="password" name="c_pass" class="box" 
-                        maxlength="50"  placeholder="confirm your new password" id="">
-                    </div>
+                    <p>your email </p>
+                    <input type="email" name="email" class="box" 
+                    maxlength="50"  placeholder="<?php echo $fetch_profile['email'];?>" id="">
                 </div>
-                <p>select pic</p>
-                        <input type="file" name="image" class="box"  accept="image/*">
-                <input type="submit" value="update now" name="submit" class="btn">
-            </form>
-        </section>
+                <div class="col">
+                    <p>old password </p>
+                    <input type="password" name="old_pass" class="box" 
+                    maxlength="50"  placeholder="enter your old password" id="">
+
+                    <p>your password </p>
+                    <input type="password" name="new_pass" class="box" 
+                    maxlength="50"  placeholder="enter your new password" id="">
+
+                    <p>confirm password </p>
+                    <input type="password" name="c_pass" class="box" 
+                    maxlength="50"  placeholder="confirm your new password" id="">
+                </div>
+            </div>
+            <p>select pic</p>
+                    <input type="file" name="image" class="box"  accept="image/*">
+            <input type="submit" value="update now" name="submit" class="btn">
+        </form>
+    </section>
 
     <!-- update section end -->
 

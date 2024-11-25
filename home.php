@@ -52,7 +52,7 @@
           <p>total likes: <span><?php echo $total_likes; ?></span></p>
           <a href="likes.php" class="inline-btn">views likes</a>
           <p>total comments: <span><?php echo $total_comments; ?></span></p>
-          <a href="comments.php" class="inline-btn">views comments</a>
+          <a href="comment.php" class="inline-btn">views comments</a>
           <p>playlist saved: <span><?php echo $total_bookmark; ?></span></p>
           <a href="bookmark.php" class="inline-btn">views bookmark</a>
         </div>

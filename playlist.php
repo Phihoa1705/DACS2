@@ -21,7 +21,7 @@ if(isset($_POST['save_list'])) {
         $list_id = $_POST['list_id']; 
         $list_id = filter_var($list_id, FILTER_SANITIZE_STRING);
 
-        $verify_list = $conn->prepare("SELECT * FROM `playlist` WHERE playlist_id = ? AND user_id = ?");
+        $verify_list = $conn->prepare("SELECT * FROM `bookmark` WHERE playlist_id = ? AND user_id = ?");
         $verify_list->execute([$list_id, $user_id]);
 
         if($verify_list->rowCount() > 0) {
