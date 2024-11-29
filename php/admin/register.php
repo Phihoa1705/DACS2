@@ -10,7 +10,7 @@ if(isset($_COOKIE['tutor_id']))
 
 if(isset($_POST['submit']))
 {
-    $id = create_unique_id();
+    $id = createUniqueID();
     $name = $_POST['name'];
     $name = filter_var($name, FILTER_SANITIZE_STRING);
     $profession = $_POST['profession'];
@@ -25,13 +25,13 @@ if(isset($_POST['submit']))
     $image = $_FILES['image']['name'];
     $image = filter_var($image, FILTER_SANITIZE_STRING);
     $ext = pathinfo($image, PATHINFO_EXTENSION);
-    $rename = create_unique_id().'.'.$ext;
+    $rename = createUniqueID().'.'.$ext;
 
     $image_tmp_name = $_FILES['image']['tmp_name'];
     $image_size = $_FILES['image']['size'];
     $image_folder = '../uploaded_files/'.$rename;
 
-    $select_turor_email = $conn->prepare('SELECT * FROM tutors WHERE email = ?');
+    $select_turor_email = getDatabaseConnection()->prepare('SELECT * FROM tutors WHERE email = ?');
     $select_turor_email->execute([$email]);
 
     if($select_turor_email->rowCount() > 0) {
@@ -44,7 +44,7 @@ if(isset($_POST['submit']))
             if($image_size > 2000000) {
                 $message[] = 'image size is too large!';
             } else {
-                $insert_tutor = $conn->prepare('INSERT INTO tutors 
+                $insert_tutor = getDatabaseConnection()->prepare('INSERT INTO tutors 
                 (tutor_id, tutor_name, profession, email, pass_word, 
                 image) VALUES (?, ?, ?, ?, ?, ?)');
 
@@ -53,7 +53,7 @@ if(isset($_POST['submit']))
 
                 move_uploaded_file($image_tmp_name,$image_folder);
 
-                $verify_tutor = $conn->prepare('SELECT * FROM 
+                $verify_tutor = getDatabaseConnection()->prepare('SELECT * FROM 
                 tutors WHERE email = ? AND pass_word = ? LIMIT 1');
 
                 $verify_tutor->execute([$email, $c_pass]);

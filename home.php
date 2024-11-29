@@ -8,15 +8,15 @@
     $user_id = '';
   }
 
-  $count_likes = $conn->prepare("SELECT * FROM likes WHERE user_id = ?"); 
+  $count_likes = getDatabaseConnection()->prepare("SELECT * FROM likes WHERE user_id = ?"); 
   $count_likes->execute([$user_id]);
   $total_likes = $count_likes->rowCount();
 
-  $count_comments = $conn->prepare("SELECT * FROM comments WHERE user_id = ?"); 
+  $count_comments = getDatabaseConnection()->prepare("SELECT * FROM comments WHERE user_id = ?"); 
   $count_comments->execute([$user_id]);
   $total_comments = $count_comments->rowCount();
 
-  $count_bookmark = $conn->prepare("SELECT * FROM bookmark WHERE user_id = ?"); 
+  $count_bookmark = getDatabaseConnection()->prepare("SELECT * FROM bookmark WHERE user_id = ?"); 
   $count_bookmark->execute([$user_id]);
   $total_bookmark = $count_bookmark->rowCount();
 ?>
@@ -107,7 +107,7 @@
     <h1 class="heading">latest courses</h1>
     <div class="box-container">
       <?php
-        $select_courses = $conn->prepare("SELECT * FROM playlist WHERE status = ? 
+        $select_courses = getDatabaseConnection()->prepare("SELECT * FROM playlist WHERE status = ? 
         ORDER BY creation_date DESC LIMIT 6");
         $select_courses->execute(['active']);
 
@@ -115,11 +115,11 @@
           while($fetch_course = $select_courses->fetch(PDO::FETCH_ASSOC)) {
             $course_id = $fetch_course['playlist_id'];
 
-            $count_course = $conn->prepare('SELECT * FROM content WHERE playlist_id = ? AND status = ?');
+            $count_course = getDatabaseConnection()->prepare('SELECT * FROM content WHERE playlist_id = ? AND status = ?');
             $count_course->execute([$course_id, 'active']);
             $total_course = $count_course->rowCount();
 
-            $select_tutor = $conn->prepare("SELECT * FROM tutors WHERE tutor_id = ?");
+            $select_tutor = getDatabaseConnection()->prepare("SELECT * FROM tutors WHERE tutor_id = ?");
             $select_tutor->execute([$fetch_course['tutor_id']]);
             $fetch_tutor = $select_tutor->fetch(PDO::FETCH_ASSOC);
             // echo $course_id;

@@ -45,7 +45,7 @@
         if(isset($_POST['search_tutor_box']) or isset($_POST['search_tutor_btn'])){
           $search_tutor_btn = $_POST['search_tutor_box'];
         
-        $select_tutors = $conn->prepare("SELECT * FROM `tutors` WHERE tutor_name LIKE '%$search_tutor_btn%' OR profession LIKE '%$search_tutor_btn%'
+        $select_tutors = getDatabaseConnection()->prepare("SELECT * FROM `tutors` WHERE tutor_name LIKE '%$search_tutor_btn%' OR profession LIKE '%$search_tutor_btn%'
 ");
         $select_tutors->execute();
         if($select_tutors->rowCount() > 0){
@@ -53,19 +53,19 @@
 
               $tutor_id = $fetch_tutor['tutor_id'];
 
-              $count_playlist = $conn->prepare("SELECT * FROM `playlist` WHERE tutor_id = ?");
+              $count_playlist = getDatabaseConnection()->prepare("SELECT * FROM `playlist` WHERE tutor_id = ?");
               $count_playlist->execute([$tutor_id]);
               $total_playlist = $count_playlist->rowCount();
 
-              $count_content = $conn->prepare("SELECT * FROM `content` WHERE tutor_id = ?");
+              $count_content = getDatabaseConnection()->prepare("SELECT * FROM `content` WHERE tutor_id = ?");
               $count_content->execute([$tutor_id]);
               $total_content = $count_content->rowCount();
 
-              $count_likes = $conn->prepare("SELECT * FROM `likes` WHERE tutor_id = ?");
+              $count_likes = getDatabaseConnection()->prepare("SELECT * FROM `likes` WHERE tutor_id = ?");
               $count_likes->execute([$tutor_id]);
               $total_likes = $count_likes->rowCount();
 
-              $count_comments = $conn->prepare("SELECT * FROM `comments` WHERE tutor_id = ?");
+              $count_comments = getDatabaseConnection()->prepare("SELECT * FROM `comments` WHERE tutor_id = ?");
               $count_comments->execute([$tutor_id]);
               $total_comments = $count_comments->rowCount();
           ?>

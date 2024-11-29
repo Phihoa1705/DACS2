@@ -16,11 +16,11 @@
         $delete_id = $_POST['delete_id']; 
         $delete_id = filter_var($delete_id, FILTER_SANITIZE_STRING);
 
-        $verify_list = $conn->prepare("SELECT * FROM `bookmark` WHERE playlist_id = ? AND user_id = ?");
+        $verify_list = getDatabaseConnection()->prepare("SELECT * FROM `bookmark` WHERE playlist_id = ? AND user_id = ?");
         $verify_list->execute([$delete_id, $user_id]);
 
         if($verify_list->rowCount() > 0) {
-            $remove_list = $conn->prepare("DELETE FROM `bookmark` WHERE user_id = ? AND playlist_id = ?");
+            $remove_list = getDatabaseConnection()->prepare("DELETE FROM `bookmark` WHERE user_id = ? AND playlist_id = ?");
             $remove_list->execute([$user_id, $delete_id]);
             $message[] = 'playlist removed!';
         } else {
@@ -56,11 +56,11 @@
       <h1 class="heading">Saved Playlist</h1>
       <div class="box-container">
         <?php
-          $select_bookmark = $conn->prepare("SELECT * FROM bookmark WHERE user_id = ?");
+          $select_bookmark = getDatabaseConnection()->prepare("SELECT * FROM bookmark WHERE user_id = ?");
           $select_bookmark->execute([$user_id]);
           if($select_bookmark->rowCount() > 0) {
             while($fetch_bookmark = $select_bookmark->fetch(PDO::FETCH_ASSOC)) {
-              $select_courses = $conn->prepare("SELECT * FROM playlist WHERE playlist_id = ? AND status = ? 
+              $select_courses = getDatabaseConnection()->prepare("SELECT * FROM playlist WHERE playlist_id = ? AND status = ? 
               ORDER BY creation_date DESC");
               $select_courses->execute([$fetch_bookmark['playlist_id'],'active']);
 
@@ -68,11 +68,11 @@
                 while($fetch_course = $select_courses->fetch(PDO::FETCH_ASSOC)) {
                   $course_id = $fetch_course['playlist_id'];
 
-                  $count_course = $conn->prepare('SELECT * FROM content WHERE playlist_id = ?');
+                  $count_course = getDatabaseConnection()->prepare('SELECT * FROM content WHERE playlist_id = ?');
                   $count_course->execute([$course_id]);
                   $total_course = $count_course->rowCount();
 
-                  $select_tutor = $conn->prepare("SELECT * FROM tutors WHERE tutor_id = ?");
+                  $select_tutor = getDatabaseConnection()->prepare("SELECT * FROM tutors WHERE tutor_id = ?");
                   $select_tutor->execute([$fetch_course['tutor_id']]);
                   $fetch_tutor = $select_tutor->fetch(PDO::FETCH_ASSOC);
         ?>

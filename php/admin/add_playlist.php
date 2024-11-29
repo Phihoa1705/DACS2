@@ -9,7 +9,7 @@ if(isset($_COOKIE['tutor_id'])){
 }
 
 if(isset($_POST['submit'])){
-    $id = create_unique_id();
+    $id = createUniqueID();
     $status = $_POST['status'];
     $status = filter_var($status, FILTER_SANITIZE_STRING);
     $title = $_POST['title'];
@@ -20,19 +20,19 @@ if(isset($_POST['submit'])){
     $thumb = $_FILES['thumb']['name'];
     $thumb = filter_var($thumb, FILTER_SANITIZE_STRING);
     $ext = pathinfo($thumb, PATHINFO_EXTENSION);
-    $rename = create_unique_id().'.'.$ext;
+    $rename = createUniqueID().'.'.$ext;
 
     $thumb_tmp_name = $_FILES['thumb']['tmp_name'];
     $thumb_size = $_FILES['thumb']['size'];
     $thumb_folder = '../uploaded_files/'.$rename;
 
-    $verify_playlist = $conn->prepare("SELECT * FROM playlist WHERE playlist_id = ? AND tutor_id = ? AND title = ? AND description = ? AND thumb = ? AND status = ?");
+    $verify_playlist = getDatabaseConnection()->prepare("SELECT * FROM playlist WHERE playlist_id = ? AND tutor_id = ? AND title = ? AND description = ? AND thumb = ? AND status = ?");
     $verify_playlist->execute([$id, $tutor_id, $title, $description, $thumb, $status]);
 
     if($verify_playlist->rowCount() > 0){
         $message[] = 'playlist already exist!';
     } else {
-        $add_playlist = $conn->prepare("INSERT INTO playlist (playlist_id, tutor_id, title,
+        $add_playlist = getDatabaseConnection()->prepare("INSERT INTO playlist (playlist_id, tutor_id, title,
      description, thumb, status) VALUES (?, ?, ?, ?, ?, ?)");
 
         $add_playlist->execute([$id, $tutor_id, $title, $description, $rename, $status]);

@@ -16,7 +16,7 @@ if(isset($_COOKIE['tutor_id'])){
 
  if(isset($_POST['delete_playlist'])) {
 
-   $verify_playlist = $conn->prepare("SELECT * FROM playlist WHERE playlist_id = ?");
+   $verify_playlist = getDatabaseConnection()->prepare("SELECT * FROM playlist WHERE playlist_id = ?");
    $verify_playlist->execute([$get_id]);
 
    if($verify_playlist->rowCount() > 0) {
@@ -25,10 +25,10 @@ if(isset($_COOKIE['tutor_id'])){
        if($prev_thumb != '') {
            unlink('../uploaded_files/'.$prev_thumb);
        }
-       $delete_bookmark = $conn->prepare("DELETE FROM bookmark WHERE playlist_id = ?");
+       $delete_bookmark = getDatabaseConnection()->prepare("DELETE FROM bookmark WHERE playlist_id = ?");
        $delete_bookmark->execute([$get_id]);
 
-       $delete_playlist = $conn->prepare("DELETE FROM playlist WHERE playlist_id = ?");
+       $delete_playlist = getDatabaseConnection()->prepare("DELETE FROM playlist WHERE playlist_id = ?");
        $delete_playlist->execute([$get_id]);
 
        header('location:playlists.php');
@@ -41,20 +41,20 @@ if(isset($_POST['delete_content'])) {
    $delete_id = $_POST['content_id'];
    $delete_id = filter_var($delete_id, FILTER_SANITIZE_STRING);
 
-   $verify_content = $conn->prepare("SELECT * FROM content WHERE content_id = ?");
+   $verify_content = getDatabaseConnection()->prepare("SELECT * FROM content WHERE content_id = ?");
    $verify_content->execute([$delete_id]);
 
    if($verify_content->rowCount() > 0) {
       $fecth_content = $verify_content->fetch(PDO::FETCH_ASSOC);
       unlink('../uploaded_files/'.$fecth_content['thumb']);
       unlink('../uploaded_files/'.$fecth_content['video']);
-      $delete_comment = $conn->prepare("DELETE FROM comments WHERE content_id = ?");
+      $delete_comment = getDatabaseConnection()->prepare("DELETE FROM comments WHERE content_id = ?");
       $delete_comment->execute([$delete_id]);
       
-      $delete_likes = $conn->prepare("DELETE FROM likes WHERE content_id = ?");
+      $delete_likes = getDatabaseConnection()->prepare("DELETE FROM likes WHERE content_id = ?");
       $delete_likes->execute([$delete_id]);
 
-      $delete_content = $conn->prepare("DELETE FROM content WHERE content_id = ?");
+      $delete_content = getDatabaseConnection()->prepare("DELETE FROM content WHERE content_id = ?");
       $delete_content->execute([$delete_id]);
 
       $message[] = 'content deleted successfully';
@@ -83,14 +83,14 @@ if(isset($_POST['delete_content'])) {
     <section class="playlist-details">
       <h1 class="heading">playlist details</h1> 
       <?php
-         $select_playlist = $conn->prepare("SELECT * FROM playlist WHERE playlist_id = ? AND tutor_id = ?");
+         $select_playlist = getDatabaseConnection()->prepare("SELECT * FROM playlist WHERE playlist_id = ? AND tutor_id = ?");
          $select_playlist->execute([$get_id,$tutor_id]);
          if($select_playlist->rowCount() > 0) {
             while($fetch_playlist = $select_playlist->fetch(PDO::FETCH_ASSOC)) {
 
                $playlist_id = $fetch_playlist['playlist_id'];
                // content
-               $count_content = $conn->prepare("SELECT * FROM content WHERE playlist_id = ?");
+               $count_content = getDatabaseConnection()->prepare("SELECT * FROM content WHERE playlist_id = ?");
 
                $count_content->execute([$get_id]);
 
@@ -143,7 +143,7 @@ if(isset($_POST['delete_content'])) {
       <div class="box-container">
          <?php
 
-            $select_content = $conn->prepare("SELECT * FROM content WHERE tutor_id = ? AND playlist_id = ?");
+            $select_content = getDatabaseConnection()->prepare("SELECT * FROM content WHERE tutor_id = ? AND playlist_id = ?");
             $select_content->execute([$tutor_id,$get_id]);
 
             if($select_content->rowCount() > 0) {

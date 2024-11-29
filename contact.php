@@ -18,13 +18,13 @@
     $msg = $_POST['msg'];
     $msg = filter_var($msg, FILTER_SANITIZE_STRING);
 
-    $verify_contact = $conn->prepare("SELECT * FROM contact WHERE name = ? AND email = ? AND number = ? AND message = ?");
+    $verify_contact = getDatabaseConnection()->prepare("SELECT * FROM contact WHERE name = ? AND email = ? AND number = ? AND message = ?");
     $verify_contact->execute([$name, $email, $number, $msg]);
 
     if($verify_contact->rowCount() > 0){
       $message[] = "Your message is already sent!";
     } else {
-      $send_message = $conn->prepare("INSERT INTO contact (name, email, number, message) VALUES (?, ?, ?, ?)");
+      $send_message = getDatabaseConnection()->prepare("INSERT INTO contact (name, email, number, message) VALUES (?, ?, ?, ?)");
       $send_message->execute([$name, $email, $number, $msg]);
       $message[] = "Your message is sent!";
     }

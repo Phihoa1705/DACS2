@@ -10,19 +10,19 @@
   }
 
 // playlist
-$count_bookmark = $conn->prepare("SELECT * FROM bookmark WHERE user_id = ?");
+$count_bookmark = getDatabaseConnection()->prepare("SELECT * FROM bookmark WHERE user_id = ?");
 
 $count_bookmark->execute([$user_id]);
 
 $total_bookmarks = $count_bookmark->rowCount();
 // like
-$count_likes = $conn->prepare("SELECT * FROM likes WHERE user_id = ?");
+$count_likes = getDatabaseConnection()->prepare("SELECT * FROM likes WHERE user_id = ?");
 
 $count_likes->execute([$user_id]);
 
 $total_likes = $count_likes->rowCount();
 // comment
-$count_comments = $conn->prepare("SELECT * FROM comments WHERE user_id = ?");
+$count_comments = getDatabaseConnection()->prepare("SELECT * FROM comments WHERE user_id = ?");
 
 $count_comments->execute([$user_id]);
 
@@ -64,19 +64,19 @@ $total_comments = $count_comments->rowCount();
               <div class="box">   
                   <h3><?php echo $total_bookmarks; ?></h3>
                   <p>playlist bookmarked</p>
-                  <a href="./playlists.php" class="btn">view playlists</a>
+                  <a href="./bookmark.php" class="btn">view playlists</a>
               </div>
 
               <div class="box">   
                   <h3><?php echo $total_likes; ?></h3>
                   <p>total liked</p>
-                  <a href="./contents.php" class="btn">view Contents</a>
+                  <a href="./likes.php" class="btn">view Contents</a>
               </div>
               
               <div class="box">   
                   <h3><?php echo $total_comments; ?></h3>
                   <p>total commented</p>
-                  <a href="./comments.php" class="btn">view comments</a>
+                  <a href="./comment.php" class="btn">view comments</a>
               </div>
 
           </div>

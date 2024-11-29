@@ -25,20 +25,20 @@ if(isset($_POST['delete_content'])) {
    $delete_id = $_POST['content_id'];
    $delete_id = filter_var($delete_id, FILTER_SANITIZE_STRING);
 
-   $verify_content = $conn->prepare("SELECT * FROM content WHERE content_id = ?");
+   $verify_content = getDatabaseConnection()->prepare("SELECT * FROM content WHERE content_id = ?");
    $verify_content->execute([$delete_id]);
 
    if($verify_content->rowCount() > 0) {
       $fecth_content = $verify_content->fetch(PDO::FETCH_ASSOC);
       unlink('../uploaded_files/'.$fecth_content['thumb']);
       unlink('../uploaded_files/'.$fecth_content['video']);
-      $delete_comment = $conn->prepare("DELETE FROM comments WHERE content_id = ?");
+      $delete_comment = getDatabaseConnection()->prepare("DELETE FROM comments WHERE content_id = ?");
       $delete_comment->execute([$delete_id]);
       
-      $delete_likes = $conn->prepare("DELETE FROM likes WHERE content_id = ?");
+      $delete_likes = getDatabaseConnection()->prepare("DELETE FROM likes WHERE content_id = ?");
       $delete_likes->execute([$delete_id]);
 
-      $delete_content = $conn->prepare("DELETE FROM content WHERE content_id = ?");
+      $delete_content = getDatabaseConnection()->prepare("DELETE FROM content WHERE content_id = ?");
       $delete_content->execute([$delete_id]);
 
       header("location:contents.php");
@@ -51,11 +51,11 @@ if(isset($_POST['delete_comment'])){
    $delete_id = $_POST['comment_id'];
    $delete_id = filter_var($delete_id, FILTER_SANITIZE_STRING); 
 
-   $verify_comment = $conn->prepare("SELECT * FROM comments WHERE comment_id = ?");
+   $verify_comment = getDatabaseConnection()->prepare("SELECT * FROM comments WHERE comment_id = ?");
    $verify_comment->execute([$delete_id]);
 
    if($verify_comment->rowCount() > 0){
-      $delete_comment = $conn->prepare("DELETE FROM comments WHERE comment_id = ?");
+      $delete_comment = getDatabaseConnection()->prepare("DELETE FROM comments WHERE comment_id = ?");
       $delete_comment->execute([$delete_id]);
       $message[] = 'comment deleted successfully';
       header('location:comments.php');
@@ -83,20 +83,20 @@ if(isset($_POST['delete_comment'])){
     <!-- View content section start -->
      <section class="view-content">
          <?php
-            $select_content  = $conn->prepare("SELECT * FROM content WHERE content_id = ?");
+            $select_content  = getDatabaseConnection()->prepare("SELECT * FROM content WHERE content_id = ?");
             $select_content->execute([$get_id]);
             if($select_content->rowCount() > 0) {
                 while($fetch_content = $select_content->fetch(PDO::FETCH_ASSOC)) {
                   $content_id = $fetch_content['content_id'];
 
                   // like
-                  $count_likes = $conn->prepare("SELECT * FROM likes WHERE tutor_id = ? AND content_id = ?");
+                  $count_likes = getDatabaseConnection()->prepare("SELECT * FROM likes WHERE tutor_id = ? AND content_id = ?");
 
                   $count_likes->execute([$tutor_id,$content_id]);
 
                   $total_likes = $count_likes->rowCount();
                   // comment
-                  $count_comments = $conn->prepare("SELECT * FROM comments WHERE tutor_id = ? AND content_id = ?");
+                  $count_comments = getDatabaseConnection()->prepare("SELECT * FROM comments WHERE tutor_id = ? AND content_id = ?");
 
                   $count_comments->execute([$tutor_id,$content_id]);
 
@@ -134,12 +134,12 @@ if(isset($_POST['delete_comment'])){
          
          <div class="box-container">
             <?php
-               $select_comments = $conn->prepare("SELECT * FROM comments WHERE content_id = ? AND tutor_id = ?");
+               $select_comments = getDatabaseConnection()->prepare("SELECT * FROM comments WHERE content_id = ? AND tutor_id = ?");
                $select_comments->execute([$get_id,$tutor_id]);
                if($select_comments->rowCount() > 0) {
                   while($fetch_comment = $select_comments->fetch(PDO::FETCH_ASSOC)) {
                      $comment_id = $fetch_comment['comment_id'];
-                     $select_commentor = $conn->prepare("SELECT * FROM users WHERE user_id = ?");
+                     $select_commentor = getDatabaseConnection()->prepare("SELECT * FROM users WHERE user_id = ?");
                      $select_commentor->execute([$fetch_comment['user_id']]);
                      $fetch_commentor = $select_commentor->fetch(PDO::FETCH_ASSOC);
             ?>

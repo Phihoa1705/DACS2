@@ -51,9 +51,13 @@ if(isset($_POST['delete_content'])) {
 
     <!-- Contents section starts -->
     <section class="contents">
-      <h1 class="heading">all contents</h1>
+      <h1 class="heading">your contents</h1>
 
       <div class="box-container">
+         <div class="box" style="text-align: center;">
+            <h3 class="title" style="margin-bottom: .5rem;">create new content</h3>
+            <a href="./add_content.php" class="btn">add content</a>
+         </div>
          <?php
 
             $select_content = $conn->prepare("SELECT * FROM content WHERE tutor_id = ?");

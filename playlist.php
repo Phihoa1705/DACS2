@@ -21,15 +21,15 @@ if(isset($_POST['save_list'])) {
         $list_id = $_POST['list_id']; 
         $list_id = filter_var($list_id, FILTER_SANITIZE_STRING);
 
-        $verify_list = $conn->prepare("SELECT * FROM `bookmark` WHERE playlist_id = ? AND user_id = ?");
+        $verify_list = getDatabaseConnection()->prepare("SELECT * FROM `bookmark` WHERE playlist_id = ? AND user_id = ?");
         $verify_list->execute([$list_id, $user_id]);
 
         if($verify_list->rowCount() > 0) {
-            $remove_list = $conn->prepare("DELETE FROM `bookmark` WHERE user_id = ? AND playlist_id = ?");
+            $remove_list = getDatabaseConnection()->prepare("DELETE FROM `bookmark` WHERE user_id = ? AND playlist_id = ?");
             $remove_list->execute([$user_id, $list_id]);
             $message[] = 'playlist removed!';
         } else {
-            $add_list = $conn->prepare("INSERT INTO `bookmark`(`user_id`, `playlist_id`) VALUES (?, ?)");
+            $add_list = getDatabaseConnection()->prepare("INSERT INTO `bookmark`(`user_id`, `playlist_id`) VALUES (?, ?)");
             $add_list->execute([$user_id, $list_id]);
             $message[] = 'playlist saved!';
         }
@@ -65,7 +65,7 @@ if(isset($_POST['save_list'])) {
 
         <div class="row">
             <?php
-            $select_playlist = $conn->prepare("SELECT * FROM `playlist` WHERE playlist_id = ? AND status = ? LIMIT 1");
+            $select_playlist = getDatabaseConnection()->prepare("SELECT * FROM `playlist` WHERE playlist_id = ? AND status = ? LIMIT 1");
             $select_playlist->execute([$get_id, 'active']);
 
             if ($select_playlist->rowCount() > 0) {
@@ -73,15 +73,15 @@ if(isset($_POST['save_list'])) {
 
                     $playlist_id = $fetch_playlist['playlist_id'];
 
-                    $count_content = $conn->prepare("SELECT * FROM `content` WHERE playlist_id = ? AND status = ?");
+                    $count_content = getDatabaseConnection()->prepare("SELECT * FROM `content` WHERE playlist_id = ? AND status = ?");
                     $count_content->execute([$playlist_id,'active']);
                     $total_content = $count_content->rowCount();
 
-                    $select_tutor = $conn->prepare('SELECT * FROM tutors WHERE tutor_id = ? LIMIT 1');
+                    $select_tutor = getDatabaseConnection()->prepare('SELECT * FROM tutors WHERE tutor_id = ? LIMIT 1');
                     $select_tutor->execute([$fetch_playlist['tutor_id']]);
                     $fetch_tutor = $select_tutor->fetch(PDO::FETCH_ASSOC);
 
-                    $select_bookmark = $conn->prepare("SELECT * FROM `bookmark` WHERE user_id = ? AND playlist_id = ?");
+                    $select_bookmark = getDatabaseConnection()->prepare("SELECT * FROM `bookmark` WHERE user_id = ? AND playlist_id = ?");
                     $select_bookmark->execute([$user_id, $playlist_id]);
             ?>  
             <div class="col">
@@ -128,7 +128,7 @@ if(isset($_POST['save_list'])) {
         <h1 class="heading">playlist videos</h1>
         <div class="box-container">
             <?php
-                $select_content = $conn->prepare("SELECT * FROM `content` WHERE playlist_id = ? AND status = ? ORDER BY creation_date DESC");
+                $select_content = getDatabaseConnection()->prepare("SELECT * FROM `content` WHERE playlist_id = ? AND status = ? ORDER BY creation_date DESC");
                 $select_content->execute([$get_id, 'active']);
                 if($select_content->rowCount() > 0) {
                     while($fetch_content = $select_content->fetch(PDO::FETCH_ASSOC)) {

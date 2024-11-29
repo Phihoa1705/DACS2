@@ -24,7 +24,7 @@ if(isset($_COOKIE['tutor_id'])){
     $description = $_POST['description'];
     $description = filter_var($description, FILTER_SANITIZE_STRING);
 
-    $update_playlist = $conn->prepare("UPDATE playlist SET  title = ?, description = ?,status = ? WHERE playlist_id = ?");
+    $update_playlist = getDatabaseConnection()->prepare("UPDATE playlist SET  title = ?, description = ?,status = ? WHERE playlist_id = ?");
     $update_playlist->execute([$title, $description, $status, $get_id]);
     $message[] = 'playlist updated!';
 
@@ -34,7 +34,7 @@ if(isset($_COOKIE['tutor_id'])){
     $thumb = $_FILES['thumb']['name'];
     $thumb = filter_var($thumb, FILTER_SANITIZE_STRING);
     $ext = pathinfo($thumb, PATHINFO_EXTENSION);
-    $rename = create_unique_id().'.'.$ext;
+    $rename = createUniqueID().'.'.$ext;
 
     $thumb_tmp_name = $_FILES['thumb']['tmp_name'];
     $thumb_size = $_FILES['thumb']['size'];
@@ -44,7 +44,7 @@ if(isset($_COOKIE['tutor_id'])){
         if($thumb_size > 2000000){
             $message[] = 'image size is too large!';
         } else {
-            $update_thumb = $conn->prepare("UPDATE playlist SET thumb = ? WHERE playlist_id = ?");
+            $update_thumb = getDatabaseConnection()->prepare("UPDATE playlist SET thumb = ? WHERE playlist_id = ?");
             $update_thumb->execute([$rename, $get_id]);
             move_uploaded_file($thumb_tmp_name, $thumb_folder);
             if($old_thumb != '' AND $old_thumb != $rename) {
@@ -55,7 +55,7 @@ if(isset($_COOKIE['tutor_id'])){
  }
  if(isset($_POST['delete_playlist'])) {
 
-    $verify_playlist = $conn->prepare("SELECT * FROM playlist WHERE playlist_id = ?");
+    $verify_playlist = getDatabaseConnection()->prepare("SELECT * FROM playlist WHERE playlist_id = ?");
     $verify_playlist->execute([$get_id]);
 
     if($verify_playlist->rowCount() > 0) {
@@ -64,10 +64,10 @@ if(isset($_COOKIE['tutor_id'])){
         if($prev_thumb != '') {
             unlink('../uploaded_files/'.$prev_thumb);
         }
-        $delete_bookmark = $conn->prepare("DELETE FROM bookmark WHERE playlist_id = ?");
+        $delete_bookmark = getDatabaseConnection()->prepare("DELETE FROM bookmark WHERE playlist_id = ?");
         $delete_bookmark->execute([$get_id]);
 
-        $delete_playlist = $conn->prepare("DELETE FROM playlist WHERE playlist_id = ?");
+        $delete_playlist = getDatabaseConnection()->prepare("DELETE FROM playlist WHERE playlist_id = ?");
         $delete_playlist->execute([$get_id]);
 
         header('location:playlists.php');
@@ -95,7 +95,7 @@ if(isset($_COOKIE['tutor_id'])){
     <section class="crud-form">
         <h1 class="heading">Update Playlist</h1>
         <?php
-            $select_playlist = $conn->prepare("SELECT * FROM playlist WHERE playlist_id = ?");
+            $select_playlist = getDatabaseConnection()->prepare("SELECT * FROM playlist WHERE playlist_id = ?");
             $select_playlist->execute([$get_id]);
             if($select_playlist->rowCount() > 0) {
                 while($fetch_playlist = $select_playlist->fetch(PDO::FETCH_ASSOC)) {

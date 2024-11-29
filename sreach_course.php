@@ -36,7 +36,7 @@
       if(isset($_POST['search_box']) or isset($_POST['search_btn'])) {
       $search_box = $_POST['search_box'];
     
-        $select_courses = $conn->prepare("SELECT * FROM playlist WHERE title LIKE '%$search_box%' AND status = ? 
+        $select_courses = getDatabaseConnection()->prepare("SELECT * FROM playlist WHERE title LIKE '%$search_box%' AND status = ? 
         ORDER BY creation_date DESC");
         $select_courses->execute(['active']);
 
@@ -44,11 +44,11 @@
           while($fetch_course = $select_courses->fetch(PDO::FETCH_ASSOC)) {
             $course_id = $fetch_course['playlist_id'];
 
-            $count_course = $conn->prepare('SELECT * FROM content WHERE playlist_id = ?');
+            $count_course = getDatabaseConnection()->prepare('SELECT * FROM content WHERE playlist_id = ?');
             $count_course->execute([$course_id]);
             $total_course = $count_course->rowCount();
 
-            $select_tutor = $conn->prepare("SELECT * FROM tutors WHERE tutor_id = ?");
+            $select_tutor = getDatabaseConnection()->prepare("SELECT * FROM tutors WHERE tutor_id = ?");
             $select_tutor->execute([$fetch_course['tutor_id']]);
             $fetch_tutor = $select_tutor->fetch(PDO::FETCH_ASSOC);
       ?>

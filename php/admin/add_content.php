@@ -9,7 +9,7 @@ if(isset($_COOKIE['tutor_id'])){
  }
 
  if(isset($_POST['submit'])){
-    $id = create_unique_id();
+    $id = createUniqueID();
     $status = $_POST['status'];
     $status = filter_var($status, FILTER_SANITIZE_STRING);
     $title = $_POST['title'];
@@ -22,7 +22,7 @@ if(isset($_COOKIE['tutor_id'])){
     $thumb = $_FILES['thumb']['name'];
     $thumb = filter_var($thumb, FILTER_SANITIZE_STRING);
     $thumb_ext = pathinfo($thumb, PATHINFO_EXTENSION);
-    $rename_thumb = create_unique_id().'.'.$thumb_ext;
+    $rename_thumb = createUniqueID().'.'.$thumb_ext;
 
     $thumb_tmp_name = $_FILES['thumb']['tmp_name'];
     $thumb_size = $_FILES['thumb']['size'];
@@ -31,13 +31,13 @@ if(isset($_COOKIE['tutor_id'])){
     $video = $_FILES['video']['name'];
     $video = filter_var($video, FILTER_SANITIZE_STRING);
     $video_ext = pathinfo($video, PATHINFO_EXTENSION);
-    $rename_video = create_unique_id().'.'.$video_ext;
+    $rename_video = createUniqueID().'.'.$video_ext;
 
     $video_tmp_name = $_FILES['video']['tmp_name'];
     
     $video_folder = '../uploaded_files/'.$rename_video;
 
-    $verify_content = $conn->prepare("SELECT * FROM content WHERE content_id = ? AND tutor_id = ? AND title = ? AND description = ? AND thumb = ? AND status = ?");
+    $verify_content = getDatabaseConnection()->prepare("SELECT * FROM content WHERE content_id = ? AND tutor_id = ? AND title = ? AND description = ? AND thumb = ? AND status = ?");
     $verify_content->execute([$id, $tutor_id, $title, $description, $thumb, $status]);
 
     if($verify_content->rowCount() > 0){
@@ -46,7 +46,7 @@ if(isset($_COOKIE['tutor_id'])){
         if($thumb_size > 2000000) {
             $message[] = 'image size is too large!';
         } else {
-            $add_content = $conn->prepare("INSERT INTO content (content_id, tutor_id, playlist_id, title,
+            $add_content = getDatabaseConnection()->prepare("INSERT INTO content (content_id, tutor_id, playlist_id, title,
             description, video, thumb, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
        
             $add_content->execute([$id, $tutor_id,$playlist_id, $title, $description, $rename_video, $rename_thumb, $status]);
@@ -100,7 +100,7 @@ if(isset($_COOKIE['tutor_id'])){
 
                 <option value="" disabled selected>--select playlist</option>
                 <?php
-                    $select_playlist = $conn->prepare("SELECT * FROM playlist WHERE tutor_id = ?");
+                    $select_playlist = getDatabaseConnection()->prepare("SELECT * FROM playlist WHERE tutor_id = ?");
                     $select_playlist->execute([$tutor_id]);
                     if($select_playlist->rowCount() > 0) {
                         while($fetch_playlist = $select_playlist->fetch(PDO::FETCH_ASSOC)) {

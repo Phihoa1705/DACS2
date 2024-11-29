@@ -35,7 +35,7 @@ if(isset($_COOKIE['tutor_id'])){
                 $search_box = $_POST['search_box'];
                 $search_box = filter_var($search_box, FILTER_SANITIZE_STRING);
 
-                $select_content = $conn->prepare("SELECT * FROM content WHERE title LIKE '%{$search_box}%' AND tutor_id = ? ORDER BY creation_date DESC");
+                $select_content = getDatabaseConnection()->prepare("SELECT * FROM content WHERE title LIKE '%{$search_box}%' AND tutor_id = ? ORDER BY creation_date DESC");
                 $select_content->execute([$tutor_id]);
 
                 if($select_content->rowCount() > 0) {
@@ -85,7 +85,7 @@ if(isset($_COOKIE['tutor_id'])){
                     $search_box = $_POST['search_box'];
                     $search_box = filter_var($search_box, FILTER_SANITIZE_STRING);
 
-                    $select_playlist = $conn->prepare("SELECT * FROM playlist WHERE title LIKE '%{$search_box}%' AND tutor_id = ? ORDER BY creation_date DESC");
+                    $select_playlist = getDatabaseConnection()->prepare("SELECT * FROM playlist WHERE title LIKE '%{$search_box}%' AND tutor_id = ? ORDER BY creation_date DESC");
                     $select_playlist->execute([$tutor_id]);
                     if($select_playlist->rowCount() > 0) {
                         while($fetch_playlist = $select_playlist->fetch(PDO::FETCH_ASSOC)) {
@@ -93,7 +93,7 @@ if(isset($_COOKIE['tutor_id'])){
                             $playlist_id = $fetch_playlist['playlist_id'];
         
                             // content
-                            $count_content = $conn->prepare("SELECT * FROM content WHERE playlist_id = ?");
+                            $count_content = getDatabaseConnection()->prepare("SELECT * FROM content WHERE playlist_id = ?");
         
                             $count_content->execute([$playlist_id]);
         

@@ -10,7 +10,7 @@ if(isset($_COOKIE['tutor_id'])){
 
  if(isset($_POST['submit'])) {
 
-    $select_tutor = $conn->prepare("SELECT * FROM tutors WHERE tutor_id = ? LIMIT 1");
+    $select_tutor = getDatabaseConnection()->prepare("SELECT * FROM tutors WHERE tutor_id = ? LIMIT 1");
 
     $select_tutor->execute([$tutor_id]);
 
@@ -26,7 +26,7 @@ if(isset($_COOKIE['tutor_id'])){
     $email = filter_var($email, FILTER_SANITIZE_STRING);
 
     if(!empty($name)) {
-        $update_name = $conn->prepare("UPDATE tutors SET tutor_name = ? WHERE tutor_id = ?");
+        $update_name = getDatabaseConnection()->prepare("UPDATE tutors SET tutor_name = ? WHERE tutor_id = ?");
 
         $update_name->execute([$name, $tutor_id]);
 
@@ -34,7 +34,7 @@ if(isset($_COOKIE['tutor_id'])){
     }
 
     if(!empty($profession)) {
-        $update_profession = $conn->prepare("UPDATE tutors SET profession = ? WHERE tutor_id = ?");
+        $update_profession = getDatabaseConnection()->prepare("UPDATE tutors SET profession = ? WHERE tutor_id = ?");
 
         $update_profession->execute([$profession, $tutor_id]);
 
@@ -43,12 +43,12 @@ if(isset($_COOKIE['tutor_id'])){
     
     if(!empty($email)) {
 
-        $select_turor_email = $conn->prepare('SELECT * FROM tutors WHERE email = ?');
+        $select_turor_email = getDatabaseConnection()->prepare('SELECT * FROM tutors WHERE email = ?');
         $select_turor_email->execute([$email]);
         if($select_turor_email->rowCount() > 0) {
             $message[]= 'email already taken!';
         } else {
-            $update_email  = $conn->prepare("UPDATE tutors SET  email = ? WHERE tutor_id = ?");
+            $update_email  = getDatabaseConnection()->prepare("UPDATE tutors SET  email = ? WHERE tutor_id = ?");
 
             $update_email ->execute([$email , $tutor_id]);
 
@@ -60,7 +60,7 @@ if(isset($_COOKIE['tutor_id'])){
     $image = $_FILES['image']['name'];
     $image = filter_var($image, FILTER_SANITIZE_STRING);
     $ext = pathinfo($image, PATHINFO_EXTENSION);
-    $rename = create_unique_id().'.'.$ext;
+    $rename = createUniqueID().'.'.$ext;
 
     $image_tmp_name = $_FILES['image']['tmp_name'];
     $image_size = $_FILES['image']['size'];
@@ -70,7 +70,7 @@ if(isset($_COOKIE['tutor_id'])){
         if($image_size > 2000000) {
             $message[] = 'image size is too large!';
         } else {
-            $update_image = $conn->prepare("UPDATE tutors SET image = ? WHERE tutor_id = ?");
+            $update_image = getDatabaseConnection()->prepare("UPDATE tutors SET image = ? WHERE tutor_id = ?");
 
             $update_image->execute([$rename, $tutor_id]);
 
@@ -103,7 +103,7 @@ if(isset($_COOKIE['tutor_id'])){
             $message[] = 'confirm password not matched!';
         } else {
             if($new_pass != $emty_pass) {
-                $update_pass = $conn->prepare("UPDATE tutors SET pass_word = ? WHERE tutor_id = ?");
+                $update_pass = getDatabaseConnection()->prepare("UPDATE tutors SET pass_word = ? WHERE tutor_id = ?");
 
                 $update_pass->execute([$c_pass, $tutor_id]);
 

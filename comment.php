@@ -13,11 +13,11 @@
     $delete_id = $_POST['comment_id'];
     $delete_id = filter_var($delete_id, FILTER_SANITIZE_STRING); 
   
-    $verify_comment = $conn->prepare("SELECT * FROM comments WHERE comment_id = ?");
+    $verify_comment = getDatabaseConnection()->prepare("SELECT * FROM comments WHERE comment_id = ?");
     $verify_comment->execute([$delete_id]);
   
     if($verify_comment->rowCount() > 0){
-       $delete_comment = $conn->prepare("DELETE FROM comments WHERE comment_id = ?");
+       $delete_comment = getDatabaseConnection()->prepare("DELETE FROM comments WHERE comment_id = ?");
        $delete_comment->execute([$delete_id]);
        $message[] = 'comment deleted successfully';
        header('location:comment.php');
@@ -33,13 +33,13 @@
     $comment_box = $_POST['comment_box'];
     $comment_box = filter_var($comment_box, FILTER_SANITIZE_STRING);
   
-    $verify_edit_comment = $conn->prepare("SELECT * FROM comments WHERE comment_id = ? AND comment = ?");
+    $verify_edit_comment = getDatabaseConnection()->prepare("SELECT * FROM comments WHERE comment_id = ? AND comment = ?");
     $verify_edit_comment->execute([$edit_id, $comment_box]);
   
     if($verify_edit_comment->rowCount() > 0) {
       $message[] = 'comment already added!';
     } else {
-      $update_comment = $conn->prepare("UPDATE comments SET comment = ? WHERE comment_id = ?");
+      $update_comment = getDatabaseConnection()->prepare("UPDATE comments SET comment = ? WHERE comment_id = ?");
       $update_comment->execute([$comment_box, $edit_id]);
       $message[] = 'comment updated successfully!';
     }
@@ -67,7 +67,7 @@
     if(isset($_POST['update_comment'])) {
       $update_id = $_POST['comment_id'];
       $update_id = filter_var($update_id, FILTER_SANITIZE_STRING);
-      $select_update_comment = $conn->prepare("SELECT * FROM comments WHERE comment_id = ? LIMIT 1");
+      $select_update_comment = getDatabaseConnection()->prepare("SELECT * FROM comments WHERE comment_id = ? LIMIT 1");
 
       $select_update_comment->execute([$update_id]);
       $fetch_update_comment = $select_update_comment->fetch(PDO::FETCH_ASSOC);
@@ -98,13 +98,13 @@
          
          <div class="box-container">
             <?php
-               $select_comments = $conn->prepare("SELECT * FROM comments WHERE user_id = ?");
+               $select_comments = getDatabaseConnection()->prepare("SELECT * FROM comments WHERE user_id = ?");
                $select_comments->execute([$user_id]);
                if($select_comments->rowCount() > 0) {
                   while($fetch_comment = $select_comments->fetch(PDO::FETCH_ASSOC)) {
                     $comment_id = $fetch_comment['comment_id'];
 
-                    $select_content = $conn->prepare("SELECT * FROM content WHERE content_id = ?");
+                    $select_content = getDatabaseConnection()->prepare("SELECT * FROM content WHERE content_id = ?");
                     $select_content->execute([$fetch_comment['content_id']]);
                     $fetch_content = $select_content->fetch(PDO::FETCH_ASSOC);
             ?>

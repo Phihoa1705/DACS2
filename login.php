@@ -15,7 +15,7 @@
     $pass = sha1($_POST['pass']);
     $pass = filter_var($pass, FILTER_SANITIZE_STRING);
 
-    $verify_user = $conn->prepare('SELECT * FROM 
+    $verify_user = getDatabaseConnection()->prepare('SELECT * FROM 
     users WHERE email = ? AND password = ? LIMIT 1');
 
     $verify_user->execute([$email, $pass]);

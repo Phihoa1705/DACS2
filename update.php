@@ -12,7 +12,7 @@
 
   if(isset($_POST['submit'])) {
 
-    $select_user = $conn->prepare("SELECT * FROM users WHERE user_id = ? LIMIT 1");
+    $select_user = getDatabaseConnection()->prepare("SELECT * FROM users WHERE user_id = ? LIMIT 1");
 
     $select_user->execute([$user_id]);
 
@@ -26,7 +26,7 @@
     $email = filter_var($email, FILTER_SANITIZE_STRING);
 
     if(!empty($name)) {
-        $update_name = $conn->prepare("UPDATE users SET name = ? WHERE user_id = ?");
+        $update_name = getDatabaseConnection()->prepare("UPDATE users SET name = ? WHERE user_id = ?");
 
         $update_name->execute([$name, $user_id]);
 
@@ -35,12 +35,12 @@
     
     if(!empty($email)) {
 
-        $select_turor_email = $conn->prepare('SELECT * FROM users WHERE email = ?');
+        $select_turor_email = getDatabaseConnection()->prepare('SELECT * FROM users WHERE email = ?');
         $select_turor_email->execute([$email]);
         if($select_turor_email->rowCount() > 0) {
             $message[]= 'email already taken!';
         } else {
-            $update_email  = $conn->prepare("UPDATE users SET  email = ? WHERE user_id = ?");
+            $update_email  = getDatabaseConnection()->prepare("UPDATE users SET  email = ? WHERE user_id = ?");
 
             $update_email ->execute([$email , $user_id]);
 
@@ -52,7 +52,7 @@
     $image = $_FILES['image']['name'];
     $image = filter_var($image, FILTER_SANITIZE_STRING);
     $ext = pathinfo($image, PATHINFO_EXTENSION);
-    $rename = create_unique_id().'.'.$ext;
+    $rename = createUniqueID().'.'.$ext;
 
     $image_tmp_name = $_FILES['image']['tmp_name'];
     $image_size = $_FILES['image']['size'];
@@ -62,7 +62,7 @@
         if($image_size > 2000000) {
             $message[] = 'image size is too large!';
         } else {
-            $update_image = $conn->prepare("UPDATE users SET image = ? WHERE user_id = ?");
+            $update_image = getDatabaseConnection()->prepare("UPDATE users SET image = ? WHERE user_id = ?");
 
             $update_image->execute([$rename, $user_id]);
 
@@ -95,7 +95,7 @@
             $message[] = 'confirm password not matched!';
         } else {
             if($new_pass != $emty_pass) {
-                $update_pass = $conn->prepare("UPDATE users SET password = ? WHERE user_id = ?");
+                $update_pass = getDatabaseConnection()->prepare("UPDATE users SET password = ? WHERE user_id = ?");
 
                 $update_pass->execute([$c_pass, $user_id]);
 

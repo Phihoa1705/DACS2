@@ -41,26 +41,26 @@
     <h1 class="heading">tutor profile</h1>
 
     <?php
-        $select_tutors = $conn->prepare("SELECT * FROM `tutors` WHERE email = ? LIMIT 1");
+        $select_tutors = getDatabaseConnection()->prepare("SELECT * FROM `tutors` WHERE email = ? LIMIT 1");
         $select_tutors->execute([$get_id]);
         if($select_tutors->rowCount() > 0){
             while($fetch_tutor = $select_tutors->fetch(PDO::FETCH_ASSOC)){
 
               $tutor_id = $fetch_tutor['tutor_id'];
 
-              $count_playlist = $conn->prepare("SELECT * FROM `playlist` WHERE tutor_id = ?");
+              $count_playlist = getDatabaseConnection()->prepare("SELECT * FROM `playlist` WHERE tutor_id = ?");
               $count_playlist->execute([$tutor_id]);
               $total_playlist = $count_playlist->rowCount();
 
-              $count_content = $conn->prepare("SELECT * FROM `content` WHERE tutor_id = ?");
+              $count_content = getDatabaseConnection()->prepare("SELECT * FROM `content` WHERE tutor_id = ?");
               $count_content->execute([$tutor_id]);
               $total_content = $count_content->rowCount();
 
-              $count_likes = $conn->prepare("SELECT * FROM `likes` WHERE tutor_id = ?");
+              $count_likes = getDatabaseConnection()->prepare("SELECT * FROM `likes` WHERE tutor_id = ?");
               $count_likes->execute([$tutor_id]);
               $total_likes = $count_likes->rowCount();
 
-              $count_comments = $conn->prepare("SELECT * FROM `comments` WHERE tutor_id = ?");
+              $count_comments = getDatabaseConnection()->prepare("SELECT * FROM `comments` WHERE tutor_id = ?");
               $count_comments->execute([$tutor_id]);
               $total_comments = $count_comments->rowCount();
           ?>
@@ -96,10 +96,10 @@
     <h1 class="heading">tutor's courses</h1>
     <div class="box-container">
       <?php
-        $select_tutor_email = $conn->prepare("SELECT * FROM `tutors` WHERE email = ? LIMIT 1");
+        $select_tutor_email = getDatabaseConnection()->prepare("SELECT * FROM `tutors` WHERE email = ? LIMIT 1");
         $select_tutor_email->execute([$get_id]);
         $fetch_tutor_id = $select_tutor_email->fetch(PDO::FETCH_ASSOC);
-        $select_courses = $conn->prepare("SELECT * FROM playlist WHERE tutor_id = ? AND status = ? 
+        $select_courses = getDatabaseConnection()->prepare("SELECT * FROM playlist WHERE tutor_id = ? AND status = ? 
         ORDER BY creation_date DESC");
         $select_courses->execute([ $fetch_tutor_id['tutor_id'] ,'active']);
 
@@ -107,11 +107,11 @@
           while($fetch_course = $select_courses->fetch(PDO::FETCH_ASSOC)) {
             $course_id = $fetch_course['playlist_id'];
 
-            $count_course = $conn->prepare('SELECT * FROM content WHERE playlist_id = ?');
+            $count_course = getDatabaseConnection()->prepare('SELECT * FROM content WHERE playlist_id = ?');
             $count_course->execute([$course_id]);
             $total_course = $count_course->rowCount();
 
-            $select_tutor = $conn->prepare("SELECT * FROM tutors WHERE tutor_id = ?");
+            $select_tutor = getDatabaseConnection()->prepare("SELECT * FROM tutors WHERE tutor_id = ?");
             $select_tutor->execute([$fetch_course['tutor_id']]);
             $fetch_tutor = $select_tutor->fetch(PDO::FETCH_ASSOC);
       ?>

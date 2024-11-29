@@ -10,7 +10,7 @@
 
   if(isset($_POST['submit'])){
 
-    $id = create_unique_id();
+    $id = createUniqueID();
     $name = $_POST['name'];
     $name = filter_var($name, FILTER_SANITIZE_STRING);
     $email = $_POST['email'];
@@ -23,12 +23,12 @@
     $image = $_FILES['image']['name'];
     $image = filter_var($image, FILTER_SANITIZE_STRING);
     $ext = pathinfo($image, PATHINFO_EXTENSION);
-    $rename = create_unique_id().'.'.$ext;
+    $rename = createUniqueID().'.'.$ext;
     $image_size = $_FILES['image']['size'];
    $image_tmp_name = $_FILES['image']['tmp_name'];
    $image_folder = 'php/uploaded_files/'.$rename;
  
-    $select_user = $conn->prepare("SELECT * FROM `users` WHERE email = ?");
+    $select_user = getDatabaseConnection()->prepare("SELECT * FROM `users` WHERE email = ?");
     $select_user->execute([$email]);
     
     if($select_user->rowCount() > 0){
@@ -38,11 +38,11 @@
           $message[] = 'confirm passowrd not matched!';
        }else{
 
-          $insert_user = $conn->prepare("INSERT INTO `users`(user_id, name, email, password, image) VALUES(?,?,?,?,?)");
+          $insert_user = getDatabaseConnection()->prepare("INSERT INTO `users`(user_id, name, email, password, image) VALUES(?,?,?,?,?)");
           $insert_user->execute([$id, $name, $email, $c_pass, $rename]);
           move_uploaded_file($image_tmp_name, $image_folder);
           
-          $verify_user = $conn->prepare("SELECT * FROM `users` WHERE email = ? AND password = ? LIMIT 1");
+          $verify_user = getDatabaseConnection()->prepare("SELECT * FROM `users` WHERE email = ? AND password = ? LIMIT 1");
           $verify_user->execute([$email, $pass]);
           $row = $verify_user->fetch(PDO::FETCH_ASSOC);
           

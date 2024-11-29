@@ -26,7 +26,7 @@ if(isset($_COOKIE['tutor_id'])){
     $playlist_id = $_POST['playlist'];
     $playlist_id = filter_var($playlist_id, FILTER_SANITIZE_STRING);
 
-    $update_content = $conn->prepare("UPDATE content SET  title = ?, description = ?, 
+    $update_content = getDatabaseConnection()->prepare("UPDATE content SET  title = ?, description = ?, 
     status = ? WHERE content_id = ?");
 
     $update_content->execute([$title, $description, $status, $get_id]);
@@ -34,7 +34,7 @@ if(isset($_COOKIE['tutor_id'])){
 
     if(empty($playlist_id)) {
         
-        $update_playlist = $conn->prepare("UPDATE content SET playlist_id = ? WHERE content_id = ?");
+        $update_playlist = getDatabaseConnection()->prepare("UPDATE content SET playlist_id = ? WHERE content_id = ?");
 
         $update_playlist->execute([$playlist_id , $get_id]);
     }
@@ -44,7 +44,7 @@ if(isset($_COOKIE['tutor_id'])){
     $thumb = $_FILES['thumb']['name'];
     $thumb = filter_var($thumb, FILTER_SANITIZE_STRING);
     $thumb_ext = pathinfo($thumb, PATHINFO_EXTENSION);
-    $rename_thumb = create_unique_id().'.'.$thumb_ext;
+    $rename_thumb = createUniqueID().'.'.$thumb_ext;
 
     $thumb_tmp_name = $_FILES['thumb']['tmp_name'];
     $thumb_size = $_FILES['thumb']['size'];
@@ -54,7 +54,7 @@ if(isset($_COOKIE['tutor_id'])){
         if($thumb_size > 2000000) {
             $message[] = 'image size is too large!';
         } else {
-            $update_thumb = $conn->prepare("UPDATE content SET thumb = ? WHERE 
+            $update_thumb = getDatabaseConnection()->prepare("UPDATE content SET thumb = ? WHERE 
             content_id = ?");
             $update_thumb->execute([$rename_thumb, $get_id]);
             
@@ -70,14 +70,14 @@ if(isset($_COOKIE['tutor_id'])){
     $video = $_FILES['video']['name'];
     $video = filter_var($video, FILTER_SANITIZE_STRING);
     $video_ext = pathinfo($video, PATHINFO_EXTENSION);
-    $rename_video = create_unique_id().'.'.$video_ext;
+    $rename_video = createUniqueID().'.'.$video_ext;
 
     $video_tmp_name = $_FILES['video']['tmp_name'];
     
     $video_folder = '../uploaded_files/'.$rename_video;
 
     if(!empty($video)) {
-        $update_video = $conn->prepare("UPDATE content SET video = ? WHERE 
+        $update_video = getDatabaseConnection()->prepare("UPDATE content SET video = ? WHERE 
         content_id = ?");
         $update_video->execute([$rename_video, $get_id]);
             
@@ -94,20 +94,20 @@ if(isset($_COOKIE['tutor_id'])){
     $delete_id = $_POST['content_id'];
     $delete_id = filter_var($delete_id, FILTER_SANITIZE_STRING);
  
-    $verify_content = $conn->prepare("SELECT * FROM content WHERE content_id = ?");
+    $verify_content = getDatabaseConnection()->prepare("SELECT * FROM content WHERE content_id = ?");
     $verify_content->execute([$delete_id]);
  
     if($verify_content->rowCount() > 0) {
        $fecth_content = $verify_content->fetch(PDO::FETCH_ASSOC);
        unlink('../uploaded_files/'.$fecth_content['thumb']);
        unlink('../uploaded_files/'.$fecth_content['video']);
-       $delete_comment = $conn->prepare("DELETE FROM comments WHERE content_id = ?");
+       $delete_comment = getDatabaseConnection()->prepare("DELETE FROM comments WHERE content_id = ?");
        $delete_comment->execute([$delete_id]);
        
-       $delete_likes = $conn->prepare("DELETE FROM likes WHERE content_id = ?");
+       $delete_likes = getDatabaseConnection()->prepare("DELETE FROM likes WHERE content_id = ?");
        $delete_likes->execute([$delete_id]);
  
-       $delete_content = $conn->prepare("DELETE FROM content WHERE content_id = ?");
+       $delete_content = getDatabaseConnection()->prepare("DELETE FROM content WHERE content_id = ?");
        $delete_content->execute([$delete_id]);
  
        header("location:contents.php");
@@ -137,7 +137,7 @@ if(isset($_COOKIE['tutor_id'])){
     <section class="crud-form">
         <h1 class="heading">update content</h1>
         <?php
-            $select_content  = $conn->prepare("SELECT * FROM content WHERE content_id = ?");
+            $select_content  = getDatabaseConnection()->prepare("SELECT * FROM content WHERE content_id = ?");
             $select_content->execute([$get_id]);
             if($select_content->rowCount() > 0) {
                 while($fetch_content = $select_content->fetch(PDO::FETCH_ASSOC)) {
@@ -168,7 +168,7 @@ if(isset($_COOKIE['tutor_id'])){
 
                 <option value="<?php echo $fetch_content['playlist_id']; ?>"  selected>--select playlist</option>
                 <?php
-                    $select_playlist = $conn->prepare("SELECT * FROM playlist WHERE tutor_id = ?");
+                    $select_playlist = getDatabaseConnection()->prepare("SELECT * FROM playlist WHERE tutor_id = ?");
                     $select_playlist->execute([$tutor_id]);
                     if($select_playlist->rowCount() > 0) {
                         while($fetch_playlist = $select_playlist->fetch(PDO::FETCH_ASSOC)) {

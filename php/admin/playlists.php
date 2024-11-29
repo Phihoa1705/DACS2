@@ -12,7 +12,7 @@ if(isset($_COOKIE['tutor_id'])){
     $delete_id = $_POST['delete_id'];
     $delete_id = filter_var($delete_id, FILTER_SANITIZE_STRING);
 
-    $verify_playlist = $conn->prepare("SELECT * FROM playlist WHERE playlist_id = ?");
+    $verify_playlist = getDatabaseConnection()->prepare("SELECT * FROM playlist WHERE playlist_id = ?");
     $verify_playlist->execute([$delete_id]);
 
     if($verify_playlist->rowCount() > 0) {
@@ -21,10 +21,10 @@ if(isset($_COOKIE['tutor_id'])){
         if($prev_thumb != 'default.jpg') {
             unlink('../uploaded_files/'.$prev_thumb);
         }
-        $delete_bookmark = $conn->prepare("DELETE FROM bookmark WHERE playlist_id = ?");
+        $delete_bookmark = getDatabaseConnection()->prepare("DELETE FROM bookmark WHERE playlist_id = ?");
         $delete_bookmark->execute([$delete_id]);
 
-        $delete_playlist = $conn->prepare("DELETE FROM playlist WHERE playlist_id = ?");
+        $delete_playlist = getDatabaseConnection()->prepare("DELETE FROM playlist WHERE playlist_id = ?");
         $delete_playlist->execute([$delete_id]);
 
         $message[] = 'playlist was delete!';
@@ -61,7 +61,7 @@ if(isset($_COOKIE['tutor_id'])){
             </div>
 
             <?php
-                $select_playlist = $conn->prepare("SELECT * FROM playlist WHERE tutor_id = ?");
+                $select_playlist = getDatabaseConnection()->prepare("SELECT * FROM playlist WHERE tutor_id = ?");
                 $select_playlist->execute([$tutor_id]);
                 if($select_playlist->rowCount() > 0) {
                     while($fetch_playlist = $select_playlist->fetch(PDO::FETCH_ASSOC)) {
@@ -69,7 +69,7 @@ if(isset($_COOKIE['tutor_id'])){
                         $playlist_id = $fetch_playlist['playlist_id'];
     
                         // content
-                        $count_content = $conn->prepare("SELECT * FROM content WHERE playlist_id = ?");
+                        $count_content = getDatabaseConnection()->prepare("SELECT * FROM content WHERE playlist_id = ?");
     
                         $count_content->execute([$playlist_id]);
     

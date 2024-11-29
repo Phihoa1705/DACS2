@@ -8,26 +8,26 @@ if(isset($_COOKIE['tutor_id'])){
     header('location:login.php');
  }
 // content
-$count_content = $conn->prepare("SELECT * FROM content WHERE tutor_id = ?");
+$count_content = getDatabaseConnection()->prepare("SELECT * FROM content WHERE tutor_id = ?");
 
 $count_content->execute([$tutor_id]);
 
 $total_contents = $count_content->rowCount();
 
 // playlist
-$count_playlist = $conn->prepare("SELECT * FROM playlist WHERE tutor_id = ?");
+$count_playlist = getDatabaseConnection()->prepare("SELECT * FROM playlist WHERE tutor_id = ?");
 
 $count_playlist->execute([$tutor_id]);
 
 $total_playlists = $count_playlist->rowCount();
 // like
-$count_likes = $conn->prepare("SELECT * FROM likes WHERE tutor_id = ?");
+$count_likes = getDatabaseConnection()->prepare("SELECT * FROM likes WHERE tutor_id = ?");
 
 $count_likes->execute([$tutor_id]);
 
 $total_likes = $count_likes->rowCount();
 // comment
-$count_comments = $conn->prepare("SELECT * FROM comments WHERE tutor_id = ?");
+$count_comments = getDatabaseConnection()->prepare("SELECT * FROM comments WHERE tutor_id = ?");
 
 $count_comments->execute([$tutor_id]);
 

@@ -15,7 +15,7 @@ if(isset($_POST['submit']))
     $pass = sha1($_POST['pass']);
     $pass = filter_var($pass, FILTER_SANITIZE_STRING);
 
-    $verify_tutor = $conn->prepare('SELECT * FROM 
+    $verify_tutor = getDatabaseConnection()->prepare('SELECT * FROM 
     tutors WHERE email = ? AND pass_word = ? LIMIT 1');
 
     $verify_tutor->execute([$email, $pass]);

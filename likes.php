@@ -13,11 +13,11 @@
     $delete_id = $_POST['delete_id'];
     $delete_id = filter_var($delete_id, FILTER_SANITIZE_STRING);
 
-    $verify_like = $conn->prepare("SELECT * FROM likes WHERE user_id = ? AND content_id = ?");
+    $verify_like = getDatabaseConnection()->prepare("SELECT * FROM likes WHERE user_id = ? AND content_id = ?");
     $verify_like->execute([$user_id,$delete_id]);
     
     if($verify_like->rowCount() > 0){
-      $remove_like = $conn->prepare("DELETE FROM likes WHERE user_id = ? AND content_id = ?");
+      $remove_like = getDatabaseConnection()->prepare("DELETE FROM likes WHERE user_id = ? AND content_id = ?");
       $remove_like->execute([$user_id,$delete_id]);
       $message[] = 'like removed!';
     } else {
@@ -48,11 +48,11 @@
   <h1 class="heading">Like Video</h1>
   <div class="box-container">
     <?php
-        $select_likes = $conn->prepare("SELECT * FROM likes WHERE user_id = ?");
+        $select_likes = getDatabaseConnection()->prepare("SELECT * FROM likes WHERE user_id = ?");
         $select_likes->execute([$user_id]);
         if($select_likes->rowCount() > 0) {
           while($fetch_likes = $select_likes->fetch(PDO::FETCH_ASSOC)) {
-            $select_courses = $conn->prepare("SELECT * FROM content WHERE content_id = ? AND status = ? 
+            $select_courses = getDatabaseConnection()->prepare("SELECT * FROM content WHERE content_id = ? AND status = ? 
             ORDER BY creation_date DESC");
             $select_courses->execute([$fetch_likes['content_id'],'active']);
 
@@ -60,7 +60,7 @@
               while($fetch_course = $select_courses->fetch(PDO::FETCH_ASSOC)) {
                 $course_id = $fetch_course['content_id'];
 
-                $select_tutor = $conn->prepare("SELECT * FROM tutors WHERE tutor_id = ?");
+                $select_tutor = getDatabaseConnection()->prepare("SELECT * FROM tutors WHERE tutor_id = ?");
                 $select_tutor->execute([$fetch_course['tutor_id']]);
                 $fetch_tutor = $select_tutor->fetch(PDO::FETCH_ASSOC);
     ?>
