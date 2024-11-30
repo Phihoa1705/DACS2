@@ -1,33 +1,36 @@
 <?php
+require_once './php/components/connect.php';
 
-  require_once './php/components/connect.php';
+// Kiểm tra cookie của người dùng
+if(isset($_COOKIE['user_id'])){
+  $user_id = $_COOKIE['user_id'];
+} else {
+  $user_id = '';
+}
 
-  if(isset($_COOKIE['user_id'])){
-    $user_id = $_COOKIE['user_id'];
+  // Xử lý form đăng nhập khi người dùng nhấn nút submit
+if (isset($_POST['submit'])) {
+  // Lấy và làm sạch dữ liệu đầu vào
+  $email = $_POST['email'];
+  $email = filter_var($email, FILTER_SANITIZE_STRING);
+  $pass = $_POST['pass'];
+  $pass = filter_var($pass, FILTER_SANITIZE_STRING);
+
+  // Chuẩn bị và thực thi truy vấn để kiểm tra người dùng
+  $verify_user = getDatabaseConnection()->prepare('SELECT * FROM users WHERE email = ?');
+  $verify_user->execute([$email]);
+
+  // Lấy kết quả truy vấn
+  $row = $verify_user->fetch(PDO::FETCH_ASSOC);
+
+  // Kiểm tra kết quả truy vấn và xác thực mật khẩu
+  if ($row && password_verify($pass, $row['password'])) {
+      setcookie('user_id', $row['user_id'], time() + 60 * 60 * 24 * 30, '/');
+      header('Location: home.php');
+      exit();
   } else {
-    $user_id = '';
+      $message[] = 'Incorrect email or password!';
   }
-
-  if(isset($_POST['submit']))
-{
-    $email = $_POST['email'];
-    $email = filter_var($email, FILTER_SANITIZE_STRING);
-    $pass = sha1($_POST['pass']);
-    $pass = filter_var($pass, FILTER_SANITIZE_STRING);
-
-    $verify_user = getDatabaseConnection()->prepare('SELECT * FROM 
-    users WHERE email = ? AND password = ? LIMIT 1');
-
-    $verify_user->execute([$email, $pass]);
-                
-    $row = $verify_user->fetch(PDO::FETCH_ASSOC);
-
-    if($verify_user->rowCount() > 0) {
-        setcookie('user_id',$row['user_id'],time() +60*60*24*30,'/');
-        header('location: home.php');
-    } else {
-        $message[] = 'incorrect email or password!';
-    }
 }
 ?>
 

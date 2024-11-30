@@ -8,56 +8,66 @@
     $user_id = '';
   }
 
-  if(isset($_POST['submit'])){
+  // Xử lý form đăng ký khi người dùng nhấn nút submit
+if (isset($_POST['submit'])) {
+   // Tạo ID duy nhất cho người dùng
+   $id = createUniqueID();
+   
+   // Lấy và làm sạch dữ liệu đầu vào
+   $name = $_POST['name'];
+   $name = filter_var($name, FILTER_SANITIZE_STRING);
+   $email = $_POST['email'];
+   $email = filter_var($email, FILTER_SANITIZE_STRING);
+   $pass = $_POST['pass'];
+   $pass = filter_var($pass, FILTER_SANITIZE_STRING);
+   $c_pass = $_POST['c_pass'];
+   $c_pass = filter_var($c_pass, FILTER_SANITIZE_STRING);
 
-    $id = createUniqueID();
-    $name = $_POST['name'];
-    $name = filter_var($name, FILTER_SANITIZE_STRING);
-    $email = $_POST['email'];
-    $email = filter_var($email, FILTER_SANITIZE_STRING);
-    $pass = sha1($_POST['pass']);
-    $pass = filter_var($pass, FILTER_SANITIZE_STRING);
-    $c_pass = sha1($_POST['c_pass']);
-    $c_pass = filter_var($c_pass, FILTER_SANITIZE_STRING);
- 
-    $image = $_FILES['image']['name'];
-    $image = filter_var($image, FILTER_SANITIZE_STRING);
-    $ext = pathinfo($image, PATHINFO_EXTENSION);
-    $rename = createUniqueID().'.'.$ext;
-    $image_size = $_FILES['image']['size'];
+   // Mã hóa mật khẩu
+   $hashedPass = password_hash($pass, PASSWORD_DEFAULT);
+
+   // Xử lý hình ảnh người dùng tải lên
+   $image = $_FILES['image']['name'];
+   $image = filter_var($image, FILTER_SANITIZE_STRING);
+   $ext = pathinfo($image, PATHINFO_EXTENSION);
+   $rename = createUniqueID() . '.' . $ext;
+   $image_size = $_FILES['image']['size'];
    $image_tmp_name = $_FILES['image']['tmp_name'];
-   $image_folder = 'php/uploaded_files/'.$rename;
- 
-    $select_user = getDatabaseConnection()->prepare("SELECT * FROM `users` WHERE email = ?");
-    $select_user->execute([$email]);
-    
-    if($select_user->rowCount() > 0){
-       $message[] = 'email already taken!';
-    }else{
-       if($pass != $c_pass){
-          $message[] = 'confirm passowrd not matched!';
-       }else{
+   $image_folder = 'php/uploaded_files/' . $rename;
 
-          $insert_user = getDatabaseConnection()->prepare("INSERT INTO `users`(user_id, name, email, password, image) VALUES(?,?,?,?,?)");
-          $insert_user->execute([$id, $name, $email, $c_pass, $rename]);
-          move_uploaded_file($image_tmp_name, $image_folder);
-          
-          $verify_user = getDatabaseConnection()->prepare("SELECT * FROM `users` WHERE email = ? AND password = ? LIMIT 1");
-          $verify_user->execute([$email, $pass]);
-          $row = $verify_user->fetch(PDO::FETCH_ASSOC);
-          
-          if($insert_user){
-            if($verify_user->rowCount() > 0){
-              setcookie('user_id', $row['user_id'], time() + 60*60*24*30, '/');
-              header('location:home.php');
-           }else{
-               $message[] = 'something went wrong!';
+   // Kiểm tra email có tồn tại trong hệ thống chưa
+   $select_user = getDatabaseConnection()->prepare("SELECT * FROM `users` WHERE email = ?");
+   $select_user->execute([$email]);
+
+   if ($select_user->rowCount() > 0) {
+       $message[] = 'Email already taken!';
+   } else {
+       // Kiểm tra mật khẩu xác nhận
+       if (!password_verify($c_pass, $hashedPass)) {
+           $message[] = 'Confirm password not matched!';
+       } else {
+           // Thêm người dùng mới vào database
+           $insert_user = getDatabaseConnection()->prepare("INSERT INTO `users` (user_id, name, email, password, image) VALUES (?, ?, ?, ?, ?)");
+           $insert_user->execute([$id, $name, $email, $hashedPass, $rename]);
+           move_uploaded_file($image_tmp_name, $image_folder);
+
+           // Xác thực người dùng ngay sau khi đăng ký
+           $verify_user = getDatabaseConnection()->prepare("SELECT * FROM `users` WHERE email = ? LIMIT 1");
+           $verify_user->execute([$email]);
+           $row = $verify_user->fetch(PDO::FETCH_ASSOC);
+
+           if ($insert_user) {
+               if ($verify_user->rowCount() > 0) {
+                   setcookie('user_id', $row['user_id'], time() + 60 * 60 * 24 * 30, '/');
+                   header('Location: home.php');
+                   exit();
+               } else {
+                   $message[] = 'Something went wrong!';
+               }
            }
-          }
        }
-    }
- 
- }
+   }
+}
 
 ?>
 

@@ -12,7 +12,7 @@
 <!-- header section start -->
     <header class="header">
         <section class="flex">
-            <a href="/DACS2/php/admin/dashboard.php" class="logo">Admin.</a>
+            <a href="/DACS2/php/admin/dashboard.php" class="logo">Admin</a>
 
             <form action="/DACS2/php/admin/sreach_page.php" method="post" class="search-form">
                 <input type="text" placeholder="search here..." name="search_box" id="" required maxlength="100">
